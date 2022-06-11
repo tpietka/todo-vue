@@ -5,14 +5,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest"
   },
   "dependencies": {
     "vue": "^3.2.25",
     "vue-router": "^4.0.16"
   },
   "devDependencies": {
+    "@types/jest": "^28.1.1",
     "@vitejs/plugin-vue": "^2.3.3",
+    "@vue/test-utils": "^2.0.0-rc.18",
+    "@vue/vue3-jest": "^28.0.0",
+    "babel-jest": "^28.1.1",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
+    "ts-jest": "^28.0.4",
     "typescript": "^4.5.4",
     "vite": "^2.9.9",
     "vue-tsc": "^0.34.7"
