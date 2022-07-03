@@ -13,6 +13,7 @@ export const useTodos = defineStore('todos', {
   actions: {
     addTodo(todo: Todo) {
       todo.id = this.getNextId();
+      todo.done = false;
       todo.created = getCurrentDateTime();
       this.todos.push(todo);
       localStorage.setItem('todos', JSON.stringify(this.todos));
