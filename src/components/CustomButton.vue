@@ -2,17 +2,21 @@
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-defineProps<{
-  routeName: string;
+const props = defineProps<{
+  routeName?: string;
   label: string;
   classes?: string;
   id?: string;
 }>();
+
+const navigate = () => {
+  if (props.routeName) {
+    router.push({ name: props.routeName });
+  }
+};
 </script>
 <template>
-  <div>
-    <button :class="classes" :id="id" @click="router.push({ name: routeName })">
-      {{ label }}
-    </button>
-  </div>
+  <button :class="classes" :id="id" @click="navigate">
+    {{ label }}
+  </button>
 </template>
