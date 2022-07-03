@@ -12,12 +12,12 @@ defineProps<{
       'rounded-full',
       'border-2',
       'mx-auto',
-      'w-10',
-      'h-10',
+      'w-16',
+      'h-16',
     ]"
   >
     <div
-      class="counter flex justify-center items-center self-center h-full text-lg font-medium"
+      class="counter flex justify-center items-center self-center h-full text-2xl font-medium"
     >
       {{ counter }}
     </div>
