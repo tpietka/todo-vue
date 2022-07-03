@@ -1,6 +1,5 @@
+import { Todo } from '../models/todo';
 import { defineStore } from 'pinia'
-import { useLocalStorage } from '../composables/useLocalStorage';
-import { Todo } from '../composables/useTodos'
 import { getCurrentDateTime } from '../helpers/date';
 
 export const useTodos = defineStore('todos', {
