@@ -18,30 +18,38 @@ const goBack = () => {
 };
 </script>
 <template>
-  <h1 class="text-xl pb-10">Todo details</h1>
-  <div class="w-full px-8 pb-8">
-    <input-label label="Title"></input-label>
-    <input class="w-full h-10" type="text" v-model="form.title" />
-  </div>
-  <div class="w-full px-8 pb-8">
-    <input-label label="Description"></input-label>
-    <textarea class="w-full" rows="4" v-model="form.text" />
-  </div>
-  <div class="w-full px-8 pb-8">
-    <input-label label="Deadline"></input-label>
-    <input class="w-full h-10" type="text" v-model="form.deadline" />
-  </div>
-  <div class="fixed flex justify-center bottom-0 w-full border-t border-black">
-    <button
-      class="h-full py-4 w-full bg-green-500 text-white"
-      @click="submit"
-      id="save-todo"
+  <div class="mx-auto flex-col">
+    <h1 class="text-xl pb-10">Todo details</h1>
+    <div class="w-full md:px-0 px-8 pb-8 md:w-96 md:mx-auto">
+      <input-label label="Title"></input-label>
+      <input class="w-full h-10" type="text" v-model="form.title" />
+    </div>
+    <div class="w-full md:px-0 px-8 pb-8 md:w-96 md:mx-auto">
+      <input-label label="Description"></input-label>
+      <textarea class="w-full" rows="4" v-model="form.text" />
+    </div>
+    <div class="w-full md:px-0 px-8 pb-8 md:w-96 md:mx-auto">
+      <input-label label="Deadline"></input-label>
+      <input class="w-full h-10" type="text" v-model="form.deadline" />
+    </div>
+    <div
+      class="fixed md:relative md:mt-4 md:w-96 md:mx-auto md:gap-2 flex justify-center bottom-0 w-full"
     >
-      Save
-    </button>
-    <button class="h-full py-4 w-full bg-red-500 text-white" @click="goBack" id="go-back">
-      Go Back
-    </button>
+      <button
+        class="h-full py-4 w-full bg-green-500 text-white"
+        @click="submit"
+        id="save-todo"
+      >
+        Save
+      </button>
+      <button
+        class="h-full py-4 w-full bg-red-500 text-white"
+        @click="goBack"
+        id="go-back"
+      >
+        Go Back
+      </button>
+    </div>
   </div>
 </template>
 

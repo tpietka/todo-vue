@@ -6,7 +6,17 @@ defineProps<{
 </script>
 
 <template>
-  <div :class="[className, 'rounded-full', 'border-2', 'mx-auto', 'w-16', 'h-16']">
+  <div
+    :class="[
+      className,
+      'rounded-full',
+      'border-2',
+      'mx-auto',
+      'md:mx-16',
+      'w-16',
+      'h-16',
+    ]"
+  >
     <div
       class="counter flex justify-center items-center self-center h-full text-2xl font-medium"
     >
