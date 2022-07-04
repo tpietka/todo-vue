@@ -1,6 +1,6 @@
 import { Todo } from '../models/todo';
 import { defineStore } from 'pinia'
-import { getCurrentDateTime } from '../helpers/date';
+import { getCurrentDateTime, getCurrentDateWithoutTime } from '../helpers/date';
 
 export const useTodos = defineStore('todos', {
   state: () => {
@@ -8,6 +8,7 @@ export const useTodos = defineStore('todos', {
       todos: [] as Todo[],
       awaitingTodosCount: 0,
       doneTodosCount: 0,
+      deadlineTodosCount: 0,
     }
   },
   actions: {
@@ -41,6 +42,12 @@ export const useTodos = defineStore('todos', {
     getTodosCounts() {
       this.getAwaitingTodosCount();
       this.getDoneTodosCount();
+      this.getDeadlineTodosCount();
+    },
+    getDeadlineTodosCount() {
+      this.deadlineTodosCount = this.todos.filter((item) => {
+        return getCurrentDateWithoutTime() >= item.deadline && !item.done
+      }).length;
     },
     getAwaitingTodosCount() {
       this.awaitingTodosCount = this.todos.filter((item) => {

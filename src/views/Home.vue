@@ -4,7 +4,9 @@ import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import TodosCounter from '../components/TodosCounter.vue';
 import CustomButton from '../components/CustomButton.vue';
-const { todos, awaitingTodosCount, doneTodosCount } = toRefs(useTodos());
+const { todos, awaitingTodosCount, doneTodosCount, deadlineTodosCount } = toRefs(
+  useTodos()
+);
 const { getTodos } = useTodos();
 onBeforeMount(() => {
   getTodos();
@@ -12,8 +14,9 @@ onBeforeMount(() => {
 </script>
 <template>
   <div class="flex gap-2 mx-auto">
-    <todos-counter :counter="awaitingTodosCount" :done="false"></todos-counter>
-    <todos-counter :counter="doneTodosCount" :done="true"></todos-counter>
+    <todos-counter :counter="deadlineTodosCount" className="deadline"></todos-counter>
+    <todos-counter :counter="awaitingTodosCount" className="awaiting"></todos-counter>
+    <todos-counter :counter="doneTodosCount" className="done"></todos-counter>
   </div>
   <div class="mt-24">
     <todo-list :todos="todos"></todo-list>
