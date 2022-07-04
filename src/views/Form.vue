@@ -56,6 +56,6 @@ const goBack = () => {
 <style scoped>
 input,
 textarea {
-  background-color: #dfdfdf;
+  background-color: #f3f3f3;
 }
 </style>
