@@ -2,9 +2,8 @@
 import { computed } from 'vue';
 import { getCurrentDateWithoutTime } from '../helpers/date';
 import { Todo } from '../models/todo';
-import { useTodos } from '../stores/todos';
+import TodoButtons from './TodoButtons.vue';
 
-const { markDone, deleteTodo } = useTodos();
 const props = defineProps<{
   todo: Todo;
 }>();
@@ -15,18 +14,18 @@ const isDeadlineToday = computed(() => {
 </script>
 
 <template>
-  <div class="flex-column justify-between items-center p-2">
-    <div class="flex-column">
-      <div class="flex w-full justify-between">
-        <div class="font-bold text-lg">{{ todo.title }}</div>
-        <div
-          v-if="todo.deadline"
-          :class="[isDeadlineToday ? 'text-red-500' : 'text-black-500']"
-        >
-          Due date: {{ todo.deadline }}
-        </div>
+  <div class="flex justify-between items-center p-2">
+    <div class="flex-col w-full justify-start">
+      <div class="font-bold text-lg text-left">{{ todo.title }}</div>
+      <div
+        v-if="todo.deadline"
+        :class="[isDeadlineToday ? 'text-red-500' : 'text-black-500', 'text-left']"
+      >
+        Due date: {{ todo.deadline }}
       </div>
-      <div class="text-left leading-tight">{{ todo.text }}</div>
+    </div>
+    <div>
+      <todo-buttons :id="todo.id" :done="todo.done"></todo-buttons>
     </div>
   </div>
 </template>
