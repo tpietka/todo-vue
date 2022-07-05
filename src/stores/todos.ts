@@ -1,14 +1,45 @@
 import { Todo } from '../models/todo';
 import { defineStore } from 'pinia'
-import { getCurrentDateTime, getCurrentDateWithoutTime } from '../helpers/date';
+import { getCurrentDateTime, getCurrentDateWithoutTime, getDateWithoutTime } from '../helpers/date';
 
+interface StoreState {
+  todos: Todo[];
+}
 export const useTodos = defineStore('todos', {
-  state: () => {
+  state: (): StoreState => {
     return {
-      todos: [] as Todo[],
-      awaitingTodosCount: 0,
-      doneTodosCount: 0,
-      deadlineTodosCount: 0,
+      todos: [],
+    }
+  },
+  getters: {
+    doneTodos: (state: StoreState) => {
+      return state.todos.filter(todo => {
+        return todo.done;
+      })
+    },
+    awaitingTodos: (state: StoreState) => {
+      return state.todos.filter(todo => {
+        return !todo.done;
+      })
+    },
+    todayTodos: (state: StoreState) => {
+      return state.todos.filter(todo => {
+        return getCurrentDateWithoutTime() >= getDateWithoutTime(todo.deadline) && !todo.done;
+      })
+    },
+    nextDaysTodos: (state: StoreState) => {
+      return state.todos.filter(todo => {
+        return getCurrentDateWithoutTime() < getDateWithoutTime(todo.deadline) && !todo.done;
+      })
+    },
+    deadlineTodosCount(): number {
+      return this.todayTodos.length;
+    },
+    awaitingTodosCount(): number {
+      return this.awaitingTodos.length;
+    },
+    doneTodosCount(): number {
+      return this.doneTodos.length;
     }
   },
   actions: {
@@ -39,26 +70,6 @@ export const useTodos = defineStore('todos', {
         return a.id - b.id;
       })[this.todos.length - 1].id + 1;
     },
-    getTodosCounts() {
-      this.getAwaitingTodosCount();
-      this.getDoneTodosCount();
-      this.getDeadlineTodosCount();
-    },
-    getDeadlineTodosCount() {
-      this.deadlineTodosCount = this.todos.filter((item) => {
-        return getCurrentDateWithoutTime() >= item.deadline && !item.done
-      }).length;
-    },
-    getAwaitingTodosCount() {
-      this.awaitingTodosCount = this.todos.filter((item) => {
-        return !item.done;
-      }).length;
-    },
-    getDoneTodosCount() {
-      this.doneTodosCount = this.todos.filter((item) => {
-        return item.done;
-      }).length;
-    },
     markDone(id: number) {
       const todo = this.todos.find(x => x.id == id);
       if (todo) {
@@ -66,7 +77,6 @@ export const useTodos = defineStore('todos', {
         todo.completed = getCurrentDateTime();
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
-      this.getTodosCounts();
     },
     markUndone(id: number) {
       const todo = this.todos.find(x => x.id == id);
@@ -81,14 +91,12 @@ export const useTodos = defineStore('todos', {
         return item.id != id;
       })
       localStorage.setItem('todos', JSON.stringify(this.todos));
-      this.getTodosCounts();
     },
     getTodos() {
       const localStorageTodos = localStorage.getItem('todos');
       if (localStorageTodos) {
         this.todos = JSON.parse(localStorageTodos);
         this.sortTodos();
-        this.getTodosCounts();
       }
     }
   },

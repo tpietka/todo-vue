@@ -1,30 +1,23 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { Todo } from '../models/todo';
 import TodoComponent from './Todo.vue';
 
-const props = defineProps<{
+defineProps<{
   todos: Todo[];
+  label: string;
+  noTodosMessage: string;
 }>();
-
-const awaitingTodos = computed(() => {
-  return props.todos.filter((item) => {
-    return !item.done;
-  });
-});
-
-const doneTodos = computed(() => {
-  return props.todos.filter((item) => {
-    return item.done;
-  });
-});
 </script>
 
 <template>
-  <div class="mx-6 my-3" v-for="todo in awaitingTodos" :key="todo.id">
-    <todo-component :todo="todo"></todo-component>
+  <div class="text-4xl text-left">{{ label }}</div>
+  <div v-if="todos.length > 0" class="mt-8 mb-24">
+    <todo-component
+      class="mt-4 mb-4"
+      v-for="todo in todos"
+      :key="todo.id"
+      :todo="todo"
+    ></todo-component>
   </div>
-  <div class="mx-6 my-3" v-for="todo in doneTodos" :key="todo.id">
-    <todo-component class="opacity-60" :todo="todo"></todo-component>
-  </div>
+  <div v-else class="mt-8 mb-24 text-left">{{ noTodosMessage }}</div>
 </template>

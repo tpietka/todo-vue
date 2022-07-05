@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { getCurrentDateWithoutTime } from '../helpers/date';
+import { getCurrentDateWithoutTime, getDateWithoutTime } from '../helpers/date';
 import { Todo } from '../models/todo';
 import TodoButtons from './TodoButtons.vue';
 
@@ -9,23 +9,32 @@ const props = defineProps<{
 }>();
 
 const isDeadlineToday = computed(() => {
-  return getCurrentDateWithoutTime() >= props.todo.deadline;
+  return getCurrentDateWithoutTime() >= getDateWithoutTime(props.todo.deadline);
 });
 </script>
 
 <template>
-  <div class="flex justify-between items-center p-2">
-    <div class="flex-col w-full justify-start">
-      <div class="font-bold text-lg text-left">{{ todo.title }}</div>
+  <div class="flex-col justify-between items-start">
+    <div class="flex w-full justify-start gap-2 items-center">
       <div
-        v-if="todo.deadline"
-        :class="[isDeadlineToday ? 'text-red-500' : 'text-black-500', 'text-left']"
+        :class="[
+          todo.done ? 'opacity-60' : 'opacity-100',
+          'font-bold w-full text-2xl text-left',
+        ]"
       >
-        Due date: {{ todo.deadline }}
+        {{ todo.title }}
       </div>
-    </div>
-    <div>
       <todo-buttons :id="todo.id" :done="todo.done"></todo-buttons>
+    </div>
+    <div
+      v-if="todo.deadline"
+      :class="[
+        isDeadlineToday && !todo.done ? 'text-red-500' : 'text-black-500',
+        todo.done ? 'opacity-60' : 'opacity-100',
+        'text-left flex gap-2',
+      ]"
+    >
+      <span class="material-icons"> schedule </span> {{ todo.deadline }}
     </div>
   </div>
 </template>
