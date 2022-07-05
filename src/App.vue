@@ -1,6 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <router-view></router-view>
 </template>
 
