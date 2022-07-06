@@ -12,22 +12,22 @@ export const useTodos = defineStore('todos', {
     }
   },
   getters: {
-    doneTodos: (state: StoreState) => {
+    doneTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
         return todo.done;
       })
     },
-    awaitingTodos: (state: StoreState) => {
+    awaitingTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
         return !todo.done;
       })
     },
-    todayTodos: (state: StoreState) => {
+    todayTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
         return getCurrentDateWithoutTime() >= getDateWithoutTime(todo.deadline) && !todo.done;
       })
     },
-    nextDaysTodos: (state: StoreState) => {
+    nextDaysTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
         return getCurrentDateWithoutTime() < getDateWithoutTime(todo.deadline) && !todo.done;
       })
@@ -43,7 +43,7 @@ export const useTodos = defineStore('todos', {
     }
   },
   actions: {
-    addTodo(todo: Todo) {
+    addTodo(todo: Todo): void {
       todo.id = this.getNextId();
       todo.done = false;
       todo.created = getCurrentDateTime();
@@ -51,7 +51,7 @@ export const useTodos = defineStore('todos', {
       localStorage.setItem('todos', JSON.stringify(this.todos));
       this.sortTodos();
     },
-    sortTodos() {
+    sortTodos(): void {
       this.todos = this.todos.sort((a, b) => {
         if (b.deadline >= a.deadline) {
           return -1;
@@ -62,7 +62,7 @@ export const useTodos = defineStore('todos', {
         }
       })
     },
-    getNextId() {
+    getNextId(): number {
       if (this.todos.length < 1) {
         return 1;
       }
@@ -70,7 +70,7 @@ export const useTodos = defineStore('todos', {
         return a.id - b.id;
       })[this.todos.length - 1].id + 1;
     },
-    markDone(id: number) {
+    markDone(id: number): void {
       const todo = this.todos.find(x => x.id == id);
       if (todo) {
         todo.done = true;
@@ -78,7 +78,7 @@ export const useTodos = defineStore('todos', {
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
     },
-    markUndone(id: number) {
+    markUndone(id: number): void {
       const todo = this.todos.find(x => x.id == id);
       if (todo) {
         todo.done = false;
@@ -86,13 +86,13 @@ export const useTodos = defineStore('todos', {
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
     },
-    deleteTodo(id: number) {
+    deleteTodo(id: number): void {
       this.todos = this.todos.filter(item => {
         return item.id != id;
       })
       localStorage.setItem('todos', JSON.stringify(this.todos));
     },
-    getTodos() {
+    getTodos(): void {
       const localStorageTodos = localStorage.getItem('todos');
       if (localStorageTodos) {
         this.todos = JSON.parse(localStorageTodos);
