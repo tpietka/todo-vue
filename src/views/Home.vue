@@ -10,9 +10,11 @@ onBeforeMount(() => {
 });
 </script>
 <template>
-  <div class="hidden md:flex md:justify-center md:my-12">
+  <div
+    class="flex fixed justify-center bottom-0 w-full md:relative md:justify-center md:my-12"
+  >
     <custom-button
-      class="bg-green-700 font-bold py-2 bottom-0 w-48 hover:bg-green-600"
+      class="bg-green-700 font-bold py-2 w-full bottom-0 md:w-48 hover:bg-green-600"
       id="btn-add-todo"
       routeName="NewTodoForm"
       label="Add Todo"
@@ -36,13 +38,5 @@ onBeforeMount(() => {
       :todos="doneTodos"
       no-todos-message="You have no done todos"
     ></todo-list>
-  </div>
-  <div class="flex md:hidden fixed justify-center bottom-0 w-full">
-    <custom-button
-      class="bg-green-500 py-4 flex justify-center w-full"
-      id="btn-add-todo"
-      routeName="NewTodoForm"
-      label="Add Todo"
-    ></custom-button>
   </div>
 </template>
