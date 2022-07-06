@@ -18,8 +18,8 @@ const goBack = () => {
 };
 </script>
 <template>
-  <div class="mx-auto flex-col">
-    <h1 class="text-xl pb-10">Todo details</h1>
+  <div class="mx-auto mt-24 flex-col">
+    <h1 class="text-xl pb-10 mb-10">Todo details</h1>
     <div class="w-full md:px-0 px-8 pb-8 md:w-96 md:mx-auto">
       <input-label label="Title"></input-label>
       <input class="w-full h-10" type="text" v-model="form.title" />
