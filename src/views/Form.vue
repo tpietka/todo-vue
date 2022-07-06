@@ -25,10 +25,6 @@ const goBack = () => {
       <input class="w-full h-10" type="text" v-model="form.title" />
     </div>
     <div class="w-full md:px-0 px-8 pb-8 md:w-96 md:mx-auto">
-      <input-label label="Description"></input-label>
-      <textarea class="w-full" rows="4" v-model="form.text" />
-    </div>
-    <div class="w-full md:px-0 px-8 pb-8 md:w-96 md:mx-auto">
       <input-label label="Deadline"></input-label>
       <input class="w-full h-10" type="text" v-model="form.deadline" />
     </div>

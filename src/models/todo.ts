@@ -3,7 +3,6 @@ export interface Todo {
     created: string;
     title: string;
     deadline: string;
-    text: string;
     completed: string;
     done: boolean;
 }
