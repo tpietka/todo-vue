@@ -1,6 +1,6 @@
 import { Todo } from '../models/todo';
 import { defineStore } from 'pinia'
-import { getCurrentDateTime, getCurrentDateWithoutTime, getDateWithoutTime } from '../helpers/date';
+import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD } from '../helpers/date';
 
 interface StoreState {
   todos: Todo[];
@@ -24,12 +24,12 @@ export const useTodos = defineStore('todos', {
     },
     todayTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDateWithoutTime() >= getDateWithoutTime(todo.deadline) && !todo.done;
+        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.done;
       })
     },
     nextDaysTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDateWithoutTime() < getDateWithoutTime(todo.deadline) && !todo.done;
+        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.done;
       })
     },
     deadlineTodosCount(): number {
