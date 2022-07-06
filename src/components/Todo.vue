@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { getCurrentDateWithoutTime, getDateWithoutTime } from '../helpers/date';
+import {
+  getCurrentDate,
+  formatDateToYYYYMMDD,
+  formatDateToDDMMYYYY,
+} from '../helpers/date';
 import { Todo } from '../models/todo';
 import TodoButtons from './TodoButtons.vue';
 
@@ -9,7 +13,7 @@ const props = defineProps<{
 }>();
 
 const isDeadlineToday = computed(() => {
-  return getCurrentDateWithoutTime() >= getDateWithoutTime(props.todo.deadline);
+  return getCurrentDate() >= formatDateToYYYYMMDD(props.todo.deadline);
 });
 </script>
 
@@ -27,7 +31,8 @@ const isDeadlineToday = computed(() => {
           'text-sm flex items-center gap-2',
         ]"
       >
-        <span class="material-icons md-18"> schedule </span> {{ todo.deadline }}
+        <span class="material-icons md-18"> schedule </span>
+        {{ formatDateToDDMMYYYY(todo.deadline) }}
       </div>
     </div>
     <todo-buttons :id="todo.id" :done="todo.done"></todo-buttons>

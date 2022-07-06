@@ -22,5 +22,5 @@ defineProps<{
       :todo="todo"
     ></todo-component>
   </div>
-  <div v-else class="mt-2">{{ noTodosMessage }}</div>
+  <div v-else class="my-6">{{ noTodosMessage }}</div>
 </template>

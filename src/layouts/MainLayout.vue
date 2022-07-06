@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toRefs } from 'vue';
-import { getCurrentDayName, getCurrentDateWithoutTime } from '../helpers/date';
+import { getCurrentDayName, getCurrentDateDDMMYYYY } from '../helpers/date';
 import { useSettings } from '../stores/settings';
 const { setDark, setLight } = useSettings();
 const { theme } = toRefs(useSettings());
@@ -23,7 +23,7 @@ const { theme } = toRefs(useSettings());
         </div>
         <div class="text-right flex-col">
           <div class="text-2xl">{{ getCurrentDayName() }}</div>
-          <div>{{ getCurrentDateWithoutTime() }}</div>
+          <div>{{ getCurrentDateDDMMYYYY() }}</div>
         </div>
       </div>
       <router-view></router-view>
