@@ -14,27 +14,20 @@ const isDeadlineToday = computed(() => {
 </script>
 
 <template>
-  <div class="flex-col justify-between items-start">
-    <div class="flex w-full justify-start gap-2 items-center">
+  <div class="flex justify-between gap-2 items-center">
+    <div :class="[todo.done ? 'opacity-60' : 'opacity-100', 'font-bold w-full text-xl']">
+      {{ todo.title }}
       <div
+        v-if="todo.deadline"
         :class="[
+          isDeadlineToday && !todo.done ? 'text-red-500' : 'text-slate-100',
           todo.done ? 'opacity-60' : 'opacity-100',
-          'font-bold w-full text-xl text-left',
+          'text-sm flex items-center gap-2',
         ]"
       >
-        {{ todo.title }}
+        <span class="material-icons md-18"> schedule </span> {{ todo.deadline }}
       </div>
-      <todo-buttons :id="todo.id" :done="todo.done"></todo-buttons>
     </div>
-    <div
-      v-if="todo.deadline"
-      :class="[
-        isDeadlineToday && !todo.done ? 'text-red-500' : 'text-black-500',
-        todo.done ? 'opacity-60' : 'opacity-100',
-        'text-left flex gap-2',
-      ]"
-    >
-      <span class="material-icons"> schedule </span> {{ todo.deadline }}
-    </div>
+    <todo-buttons :id="todo.id" :done="todo.done"></todo-buttons>
   </div>
 </template>

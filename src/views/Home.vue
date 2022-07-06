@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, toRefs } from 'vue';
+import { onBeforeMount, toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
-import TodosCounter from '../components/TodosCounter.vue';
 import CustomButton from '../components/CustomButton.vue';
 import { getCurrentDayName, getCurrentDateWithoutTime } from '../helpers/date';
 const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
@@ -12,13 +11,16 @@ onBeforeMount(() => {
 });
 </script>
 <template>
-  <div class="text-right mx-6 flex-col">
-    <div class="text-2xl">{{ getCurrentDayName() }}</div>
-    <div>{{ getCurrentDateWithoutTime() }}</div>
+  <div class="flex justify-between mx-6 md:mx-0">
+    <div class="text-4xl">MyTodos</div>
+    <div class="text-right flex-col">
+      <div class="text-2xl">{{ getCurrentDayName() }}</div>
+      <div>{{ getCurrentDateWithoutTime() }}</div>
+    </div>
   </div>
   <div class="hidden md:flex md:justify-center md:my-12">
     <custom-button
-      classes="bg-green-500 text-white py-4 flex justify-center bottom-0 w-full md:w-48"
+      class="bg-green-700 font-bold py-2 bottom-0 w-48 hover:bg-green-600"
       id="btn-add-todo"
       routeName="NewTodoForm"
       label="Add Todo"
@@ -30,11 +32,13 @@ onBeforeMount(() => {
       :todos="todayTodos"
       no-todos-message="You have no todos planned for today"
     ></todo-list>
+    <div class="border-b-2 my-10 border-slate-100 h-1"></div>
     <todo-list
       label="Next days"
       :todos="nextDaysTodos"
       no-todos-message="You have no todos planned for next days"
     ></todo-list>
+    <div class="border-b-2 my-10 border-slate-100 h-1"></div>
     <todo-list
       label="Done"
       :todos="doneTodos"
@@ -43,11 +47,10 @@ onBeforeMount(() => {
   </div>
   <div class="flex md:hidden fixed justify-center bottom-0 w-full">
     <custom-button
-      classes="bg-green-500 text-white py-4 flex justify-center w-full"
+      class="bg-green-500 py-4 flex justify-center w-full"
       id="btn-add-todo"
       routeName="NewTodoForm"
       label="Add Todo"
     ></custom-button>
   </div>
 </template>
-<style scoped></style>

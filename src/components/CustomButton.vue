@@ -5,7 +5,6 @@ const router = useRouter();
 const props = defineProps<{
   routeName?: string;
   label: string;
-  classes?: string;
   id?: string;
 }>();
 
@@ -16,7 +15,7 @@ const navigate = () => {
 };
 </script>
 <template>
-  <button :class="classes" :id="id" @click="navigate">
+  <button :id="id" @click="navigate">
     {{ label }}
   </button>
 </template>
