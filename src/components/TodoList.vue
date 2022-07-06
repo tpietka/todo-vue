@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Todo } from '../models/todo';
+import TodosCounter from './TodosCounter.vue';
 import TodoComponent from './Todo.vue';
 
 defineProps<{
@@ -10,7 +11,9 @@ defineProps<{
 </script>
 
 <template>
-  <div class="text-2xl">{{ label }}</div>
+  <div class="text-2xl flex gap-2 mb-2 items-center">
+    <span>{{ label }}</span> <todos-counter :counter="todos.length"></todos-counter>
+  </div>
   <div v-if="todos.length > 0">
     <todo-component
       class="dark:odd:bg-slate-900 p-4 odd:bg-slate-300"
