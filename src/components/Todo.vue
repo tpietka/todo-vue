@@ -19,7 +19,7 @@ const isDeadlineToday = computed(() => {
       <div
         :class="[
           todo.done ? 'opacity-60' : 'opacity-100',
-          'font-bold w-full text-2xl text-left',
+          'font-bold w-full text-xl text-left',
         ]"
       >
         {{ todo.title }}

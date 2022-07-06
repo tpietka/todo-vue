@@ -10,14 +10,9 @@ defineProps<{
 </script>
 
 <template>
-  <div class="text-4xl text-left">{{ label }}</div>
-  <div v-if="todos.length > 0" class="mt-8 mb-24">
-    <todo-component
-      class="my-4"
-      v-for="todo in todos"
-      :key="todo.id"
-      :todo="todo"
-    ></todo-component>
+  <div class="text-2xl text-left">{{ label }}</div>
+  <div v-if="todos.length > 0" class="mb-12">
+    <todo-component v-for="todo in todos" :key="todo.id" :todo="todo"></todo-component>
   </div>
-  <div v-else class="mt-8 mb-24 text-left">{{ noTodosMessage }}</div>
+  <div v-else class="mt-2 mb-12 text-left">{{ noTodosMessage }}</div>
 </template>
