@@ -22,7 +22,7 @@ onBeforeMount(() => {
       <todos-counter :counter="awaitingTodosCount" className="awaiting"></todos-counter>
       <todos-counter :counter="doneTodosCount" className="done"></todos-counter>
     </div> -->
-    <div class="mt-12 mx-6 md:mt-48 md:mx-auto mb-12 md:w-1/3">
+    <div class="mt-12 mx-6 md:mt-24 md:mx-auto mb-12">
       <div>
         <todo-list
           label="Today"

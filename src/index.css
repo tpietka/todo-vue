@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.material-icons {
+  cursor: pointer;
+}
+
 .material-icons.md-18 {
   font-size: 18px;
 }
