@@ -18,12 +18,12 @@ const goBack = () => {
 };
 </script>
 <template>
-  <div class="mx-auto mt-24 flex-col">
+  <div class="w-full mt-12 flex-col">
     <h1 class="text-xl pb-10 text-center">Todo details</h1>
     <div class="w-full md:px-0 px-8 pb-8 md:w-96 md:mx-auto">
       <input-label label="Title"></input-label>
       <input
-        class="w-full bg-slate-300 text-slate-800 h-10"
+        class="w-full px-4 bg-slate-300 text-slate-800 h-10"
         type="text"
         v-model="form.title"
       />
@@ -31,7 +31,7 @@ const goBack = () => {
     <div class="w-full md:px-0 px-8 pb-8 md:w-96 md:mx-auto">
       <input-label label="Deadline"></input-label>
       <input
-        class="w-full bg-slate-300 text-slate-800 h-10"
+        class="w-full px-4 bg-slate-300 text-slate-800 h-10"
         type="text"
         v-model="form.deadline"
       />

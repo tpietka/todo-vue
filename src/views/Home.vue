@@ -3,7 +3,6 @@ import { onBeforeMount, toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
-import { getCurrentDayName, getCurrentDateWithoutTime } from '../helpers/date';
 const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
 const { getTodos } = useTodos();
 onBeforeMount(() => {
@@ -11,13 +10,6 @@ onBeforeMount(() => {
 });
 </script>
 <template>
-  <div class="flex justify-between mx-6 md:mx-0">
-    <div class="text-4xl">MyTodos</div>
-    <div class="text-right flex-col">
-      <div class="text-2xl">{{ getCurrentDayName() }}</div>
-      <div>{{ getCurrentDateWithoutTime() }}</div>
-    </div>
-  </div>
   <div class="hidden md:flex md:justify-center md:my-12">
     <custom-button
       class="bg-green-700 font-bold py-2 bottom-0 w-48 hover:bg-green-600"
@@ -32,13 +24,13 @@ onBeforeMount(() => {
       :todos="todayTodos"
       no-todos-message="You have no todos planned for today"
     ></todo-list>
-    <div class="border-b-2 my-10 border-slate-100 h-1"></div>
+    <div class="border-b-2 my-10 border-slate-800 dark:border-slate-100 h-1"></div>
     <todo-list
       label="Next days"
       :todos="nextDaysTodos"
       no-todos-message="You have no todos planned for next days"
     ></todo-list>
-    <div class="border-b-2 my-10 border-slate-100 h-1"></div>
+    <div class="border-b-2 my-10 border-slate-800 dark:border-slate-100 h-1"></div>
     <todo-list
       label="Done"
       :todos="doneTodos"

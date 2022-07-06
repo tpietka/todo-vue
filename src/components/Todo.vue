@@ -15,12 +15,14 @@ const isDeadlineToday = computed(() => {
 
 <template>
   <div class="flex justify-between gap-2 items-center">
-    <div :class="[todo.done ? 'opacity-60' : 'opacity-100', 'font-bold w-full text-xl']">
+    <div :class="[todo.done ? 'opacity-60' : 'opacity-100', 'font-bold text-xl']">
       {{ todo.title }}
       <div
         v-if="todo.deadline"
         :class="[
-          isDeadlineToday && !todo.done ? 'text-red-500' : 'text-slate-100',
+          isDeadlineToday && !todo.done
+            ? 'text-red-500'
+            : 'dark:text-slate-100 text-slate-800',
           todo.done ? 'opacity-60' : 'opacity-100',
           'text-sm flex items-center gap-2',
         ]"

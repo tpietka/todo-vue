@@ -13,7 +13,7 @@ defineProps<{
   <div class="text-2xl">{{ label }}</div>
   <div v-if="todos.length > 0">
     <todo-component
-      class="odd:bg-slate-900 p-4"
+      class="dark:odd:bg-slate-900 p-4 odd:bg-slate-300"
       v-for="todo in todos"
       :key="todo.id"
       :todo="todo"
