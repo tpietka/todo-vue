@@ -67,7 +67,6 @@ export const useTodos = defineStore('todos', {
       })[0];
     },
     moveTodo(id: number, type: string): void {
-      console.log(type);
       let todo = this.todos.filter(todo => {
         return todo.id == id;
       })[0]
