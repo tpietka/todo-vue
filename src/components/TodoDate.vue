@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import { formatDateToDDMMYYYY } from '../helpers/date';
-defineProps<{
-  iconName: string;
+import { computed } from 'vue';
+import {
+  getCurrentDate,
+  formatDateToYYYYMMDD,
+  formatDateToDDMMYYYY,
+} from '../helpers/date';
+const props = defineProps<{
+  done: boolean;
   date: string;
 }>();
+
+const isDeadlineToday = computed(() => {
+  return getCurrentDate() >= formatDateToYYYYMMDD(props.date);
+});
 </script>
 <template>
-  {{ formatDateToDDMMYYYY(date) }}
-  <span class="material-icons md-18"> {{ iconName }} </span>
+  <span
+    :class="[
+      isDeadlineToday && !done ? 'text-red-500' : 'dark:text-slate-100 text-slate-800',
+      'text-sm flex items-center gap-1 date-container',
+    ]"
+  >
+    <span class="date"> {{ formatDateToDDMMYYYY(date) }}</span>
+    <span class="material-icons md-18"> {{ done ? 'task_alt' : 'schedule' }} </span>
+  </span>
 </template>
