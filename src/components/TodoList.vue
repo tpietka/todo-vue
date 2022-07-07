@@ -10,20 +10,52 @@ const props = defineProps<{
   noTodosMessage: string;
 }>();
 
+const getAllElementsBySelector = (selector: string) => {
+  return Array.from(document.querySelectorAll(selector)) as HTMLElement[];
+};
 const setDragId = (e: DragEvent, id: number) => {
   e.dataTransfer?.setData('Text', id.toString());
+  e.dataTransfer?.setData('StartType', props.label);
 };
 
 const dropTodo = (e: DragEvent) => {
   const id = e.dataTransfer?.getData('Text');
-  if (id) {
+  const type = e.dataTransfer?.getData('StartType');
+  if (id && type && type != props.label) {
     moveTodo(Number(id), props.label);
   }
+  getAllElementsBySelector('.todo-container').forEach((element) => {
+    element.classList.remove('drag-over');
+  });
+};
+
+const todoDragOver = (e: DragEvent) => {
+  e.preventDefault();
+  let target = e.target as HTMLElement;
+  if (
+    target.classList.contains('todo-container') ||
+    target.parentElement?.classList.contains('todo-container')
+  ) {
+    getAllElementsBySelector('.todo-container').forEach((element) => {
+      element.classList.add('drag-over');
+    });
+  }
+};
+
+const todoDragEnd = () => {
+  getAllElementsBySelector('.todo-container').forEach((element) => {
+    element.classList.remove('drag-over');
+  });
 };
 </script>
 
 <template>
-  <div @dragover="(e: DragEvent) => e.preventDefault()" @drop="dropTodo">
+  <div
+    class="todo-container"
+    @dragend="todoDragEnd"
+    @dragover="todoDragOver"
+    @drop="dropTodo"
+  >
     <div class="text-2xl flex gap-2 mb-2 items-center">
       <span>{{ label }}</span> <todos-counter :counter="todos.length"></todos-counter>
     </div>

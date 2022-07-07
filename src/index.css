@@ -10,6 +10,13 @@ html.dark {
    background-color: rgb(20 25 33);
 }
 
+.drag-over {
+  border:dashed rgb(60 60 60) 5px;
+  margin: -15px;
+  padding: 10px;
+
+}
+
 .material-icons.md-18 {
   font-size: 18px;
 }
