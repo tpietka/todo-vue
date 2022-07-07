@@ -1,4 +1,4 @@
-Test project for learning Vue with Vite and TS
+Test project for learning Vue with Vite, Tailwind, Pinia, TS, Moment, Jest
 
 Todo app
 
