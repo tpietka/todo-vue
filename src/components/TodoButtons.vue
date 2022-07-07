@@ -16,13 +16,13 @@ const editTodo = () => {
 
 <template>
   <div class="flex items-center h-10 gap-2">
-    <span v-if="!done" class="material-icons cursor-pointer md-24" @click="markDone(id)"
+    <span v-if="!done" class="material-icons cursor-pointer lg-24" @click="markDone(id)"
       >done</span
     >
-    <span v-if="!done" class="material-icons cursor-pointer md-24" @click="editTodo"
+    <span v-if="!done" class="material-icons cursor-pointer lg-24" @click="editTodo"
       >edit</span
     >
-    <span class="material-icons cursor-pointer md-24" @click="deleteTodo(id)"
+    <span class="material-icons cursor-pointer lg-24" @click="deleteTodo(id)"
       >delete</span
     >
   </div>

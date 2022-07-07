@@ -22,6 +22,6 @@ const isDeadlineToday = computed(() => {
     ]"
   >
     <span class="date"> {{ formatDateToDDMMYYYY(date) }}</span>
-    <span class="material-icons md-18"> {{ done ? 'task_alt' : 'schedule' }} </span>
+    <span class="material-icons lg-18"> {{ done ? 'task_alt' : 'schedule' }} </span>
   </span>
 </template>

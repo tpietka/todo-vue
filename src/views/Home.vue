@@ -11,16 +11,16 @@ onBeforeMount(() => {
 </script>
 <template>
   <div
-    class="flex fixed justify-center bottom-0 w-full md:relative md:justify-center md:my-12"
+    class="flex fixed justify-center bottom-0 w-full lg:relative lg:justify-center lg:my-12"
   >
     <custom-button
-      class="bg-green-700 text-slate-100 font-bold py-3 md:py-2 w-full bottom-0 md:w-48 hover:bg-green-600"
+      class="bg-green-700 text-slate-100 font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-green-600"
       id="btn-add-todo"
       routeName="NewTodoForm"
       label="Add Todo"
     ></custom-button>
   </div>
-  <div class="md:flex md:w-full my-12 mx-6 md:mx-auto md:my-0">
+  <div class="lg:flex lg:w-full my-12 mx-6 lg:mx-auto lg:my-0">
     <todo-list
       class="w-full"
       label="Today"
@@ -28,7 +28,7 @@ onBeforeMount(() => {
       no-todos-message="You have no todos planned for today"
     ></todo-list>
     <div
-      class="border-b-2 md:border-b-0 md:border-r-2 my-10 md:my-0 md:mx-10 border-slate-800 dark:border-slate-100 h-1 md:h-auto"
+      class="border-b-2 lg:border-b-0 lg:border-r-2 my-10 lg:my-0 lg:mx-10 border-slate-800 dark:border-slate-100 h-1 lg:h-auto"
     ></div>
     <todo-list
       class="w-full"
@@ -37,7 +37,7 @@ onBeforeMount(() => {
       no-todos-message="You have no todos planned for next days"
     ></todo-list>
     <div
-      class="border-b-2 md:border-b-0 md:border-r-2 my-10 md:my-0 md:mx-10 border-slate-800 dark:border-slate-100 h-1 md:h-auto"
+      class="border-b-2 lg:border-b-0 lg:border-r-2 my-10 lg:my-0 lg:mx-10 border-slate-800 dark:border-slate-100 h-1 lg:h-auto"
     ></div>
     <todo-list
       class="w-full"
