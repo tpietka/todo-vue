@@ -1,6 +1,6 @@
 import { Todo } from '../models/todo';
 import { defineStore } from 'pinia'
-import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD } from '../helpers/date';
+import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD, getTomorrowsDate } from '../helpers/date';
 
 interface StoreState {
   todos: Todo[];
@@ -50,6 +50,25 @@ export const useTodos = defineStore('todos', {
       this.todos.push(todo);
       localStorage.setItem('todos', JSON.stringify(this.todos));
       this.sortTodos();
+    },
+    moveTodo(id: number, type: string): void {
+      console.log(type);
+      let todo = this.todos.filter(todo => {
+        return todo.id == id;
+      })[0]
+      if (type == 'Today') {
+        todo.deadline = getCurrentDate();
+        todo.done = false;
+        todo.completed = '';
+      } else if (type == 'Next days') {
+        todo.deadline = getTomorrowsDate();
+        todo.done = false;
+        todo.completed = '';
+      } else {
+        todo.done = true;
+        todo.completed = getCurrentDateTime();
+      }
+      localStorage.setItem('todos', JSON.stringify(this.todos));
     },
     sortTodos(): void {
       this.todos = this.todos.sort((a, b) => {
