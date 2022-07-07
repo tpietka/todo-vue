@@ -20,20 +20,27 @@ onBeforeMount(() => {
       label="Add Todo"
     ></custom-button>
   </div>
-  <div class="my-12 mx-6 md:mx-auto md:my-0">
+  <div class="md:flex md:w-full my-12 mx-6 md:mx-auto md:my-0">
     <todo-list
+      class="w-full"
       label="Today"
       :todos="todayTodos"
       no-todos-message="You have no todos planned for today"
     ></todo-list>
-    <div class="border-b-2 my-10 border-slate-800 dark:border-slate-100 h-1"></div>
+    <div
+      class="border-b-2 md:border-b-0 md:border-r-2 my-10 md:my-0 md:mx-10 border-slate-800 dark:border-slate-100 h-1 md:h-auto"
+    ></div>
     <todo-list
+      class="w-full"
       label="Next days"
       :todos="nextDaysTodos"
       no-todos-message="You have no todos planned for next days"
     ></todo-list>
-    <div class="border-b-2 my-10 border-slate-800 dark:border-slate-100 h-1"></div>
+    <div
+      class="border-b-2 md:border-b-0 md:border-r-2 my-10 md:my-0 md:mx-10 border-slate-800 dark:border-slate-100 h-1 md:h-auto"
+    ></div>
     <todo-list
+      class="w-full"
       label="Done"
       :todos="doneTodos"
       no-todos-message="You have no done todos"
