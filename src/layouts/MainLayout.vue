@@ -12,10 +12,16 @@ const { theme } = toRefs(useSettings());
       <div class="flex justify-between mx-6 pb-4 md:mx-0">
         <div class="text-4xl">MyTodos</div>
         <div class="mt-2">
-          <span v-if="theme != 'dark'" class="material-icons" @click="setDark"
+          <span
+            v-if="theme != 'dark'"
+            class="material-icons cursor-pointer"
+            @click="setDark"
             >dark_mode</span
           >
-          <span v-if="theme == 'dark'" class="material-icons" @click="setLight"
+          <span
+            v-if="theme == 'dark'"
+            class="material-icons cursor-pointer"
+            @click="setLight"
             >light_mode</span
           >
         </div>

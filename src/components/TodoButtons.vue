@@ -11,7 +11,11 @@ const { markDone, deleteTodo } = useTodos();
 
 <template>
   <div class="flex justify-end h-10 gap-2">
-    <span v-if="!done" class="material-icons md-36" @click="markDone(id)">done</span>
-    <span class="material-icons md-36" @click="deleteTodo(id)">delete</span>
+    <span v-if="!done" class="material-icons cursor-pointer md-36" @click="markDone(id)"
+      >done</span
+    >
+    <span class="material-icons cursor-pointer md-36" @click="deleteTodo(id)"
+      >delete</span
+    >
   </div>
 </template>
