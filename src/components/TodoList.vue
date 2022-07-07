@@ -16,7 +16,7 @@ defineProps<{
   </div>
   <div v-if="todos.length > 0">
     <todo-component
-      class="dark:odd:bg-slate-900 p-4 odd:bg-slate-300"
+      class="dark:odd:bg-slate-800 p-4 odd:bg-slate-300"
       v-for="todo in todos"
       :key="todo.id"
       :todo="todo"
