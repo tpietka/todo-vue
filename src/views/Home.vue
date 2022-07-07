@@ -14,7 +14,7 @@ onBeforeMount(() => {
     class="flex fixed justify-center bottom-0 w-full md:relative md:justify-center md:my-12"
   >
     <custom-button
-      class="bg-green-700 text-slate-100 font-bold py-2 w-full bottom-0 md:w-48 hover:bg-green-600"
+      class="bg-green-700 text-slate-100 font-bold py-3 md:py-2 w-full bottom-0 md:w-48 hover:bg-green-600"
       id="btn-add-todo"
       routeName="NewTodoForm"
       label="Add Todo"
