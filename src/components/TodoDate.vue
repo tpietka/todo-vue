@@ -18,7 +18,7 @@ const isDeadlineToday = computed(() => {
   <span
     :class="[
       isDeadlineToday && !done ? 'text-red-500' : 'dark:text-slate-100 text-slate-800',
-      'text-sm flex items-center gap-1 date-container',
+      'text-sm flex items-center gap-1 date-container mt-2',
     ]"
   >
     <span class="date"> {{ formatDateToDDMMYYYY(date) }}</span>
