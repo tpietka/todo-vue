@@ -24,22 +24,14 @@ const dropTodo = (e: DragEvent) => {
   if (id && type && type != props.label) {
     moveTodo(Number(id), props.label);
   }
-  getAllElementsBySelector('.todo-container').forEach((element) => {
-    element.classList.remove('drag-over');
-  });
+  todoDragEnd();
 };
 
 const todoDragOver = (e: DragEvent) => {
   e.preventDefault();
-  let target = e.target as HTMLElement;
-  if (
-    target.classList.contains('todo-container') ||
-    target.parentElement?.classList.contains('todo-container')
-  ) {
-    getAllElementsBySelector('.todo-container').forEach((element) => {
-      element.classList.add('drag-over');
-    });
-  }
+  getAllElementsBySelector('.todo-container').forEach((element) => {
+    element.classList.add('drag-over');
+  });
 };
 
 const todoDragEnd = () => {

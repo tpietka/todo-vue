@@ -9,7 +9,7 @@ const { theme } = toRefs(useSettings());
 <template>
   <div class="h-full w-full text-slate-800 dark:text-slate-100">
     <div class="h-full md:w-10/12 md:mx-auto py-4 md:py-8">
-      <div class="flex justify-between mx-6 pb-4 md:mx-0">
+      <div class="flex justify-between mx-6 md:mx-0">
         <div class="text-4xl w-full">MyTodos</div>
         <div class="mt-2 w-full flex justify-center">
           <span
