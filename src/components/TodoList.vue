@@ -17,7 +17,7 @@ const setDragId = (e: DragEvent, id: number) => {
 const dropTodo = (e: DragEvent) => {
   const id = e.dataTransfer?.getData('Text');
   if (id) {
-    updateTodo(Number(id), props.label);
+    moveTodo(Number(id), props.label);
   }
 };
 </script>

@@ -64,7 +64,7 @@ export const useTodos = defineStore('todos', {
         todo.deadline = getTomorrowsDate();
         todo.done = false;
         todo.completed = '';
-      } else {
+      } else if (type == 'Done') {
         todo.done = true;
         todo.completed = getCurrentDateTime();
       }
