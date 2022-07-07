@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { Todo } from '../models/todo';
 import { useTodos } from '../stores/todos';
 import InputLabel from '../components/InputLabel.vue';
 import { useRouter } from 'vue-router';
 import { isDateValid } from '../helpers/date';
-
+const { addTodo, editTodo, getTodo } = useTodos();
 const router = useRouter();
-const { addTodo } = useTodos();
+
+const props = defineProps<{
+  id?: number | string;
+}>();
+
 let form = ref({} as Todo);
+
+onBeforeMount(() => {
+  if (props.id) {
+    form.value = getTodo(Number(props.id));
+  }
+});
 
 const submit = async () => {
   if (!isDateValid(form.value.deadline)) {
@@ -16,7 +26,11 @@ const submit = async () => {
   } else if (!form.value.title) {
     alert('Title cannot be empty');
   } else {
-    addTodo(form.value);
+    if (props.id) {
+      editTodo(Number(props.id), form.value);
+    } else {
+      addTodo(form.value);
+    }
     await router.push('/');
   }
 };

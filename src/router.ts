@@ -5,7 +5,8 @@ const routes = [
     path: '/', name: 'Layout', component: () => import('./layouts/MainLayout.vue'),
     children: [
       { path: '/', name: 'Home', component: () => import('./views/Home.vue') },
-      { path: '/add-todo', name: 'NewTodoForm', component: () => import('./views/Form.vue') }
+      { path: '/add-todo/', name: 'NewTodoForm', component: () => import('./views/Form.vue') },
+      { path: '/edit-todo/:id', name: 'EditTodoForm', component: () => import('./views/Form.vue'), props: true }
     ]
   },
 ] as RouteRecordRaw[];
