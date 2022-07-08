@@ -11,13 +11,8 @@ defineProps<{
 <template>
   <div class="flex-col justify-between gap-2 items-center">
     <div class="leading-tight text-lg">{{ todo.title }}</div>
-    <div
-      :class="[
-        todo.done ? 'opacity-60' : 'opacity-100',
-        'font-bold flex items-end justify-between text-xl',
-      ]"
-    >
-      <div class="flex-col items-center mt-2">
+    <div class="font-bold flex items-end justify-between text-xl">
+      <div :class="[todo.done ? 'bg-transparent' : '', 'flex-col items-center mt-2']">
         <todo-date v-if="!todo.done" :done="todo.done" :date="todo.deadline"></todo-date>
         <todo-date v-else :done="todo.done" :date="todo.completed"></todo-date>
         <div class="flex mt-1 items-center">

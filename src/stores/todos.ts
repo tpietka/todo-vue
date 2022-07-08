@@ -104,7 +104,7 @@ export const useTodos = defineStore('todos', {
         return a.id - b.id;
       })[this.todos.length - 1].id + 1;
     },
-    markDone(id: number): void {
+    setDone(id: number): void {
       const todo = this.todos.find(x => x.id == id);
       if (todo) {
         todo.done = true;
@@ -112,7 +112,7 @@ export const useTodos = defineStore('todos', {
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
     },
-    markUndone(id: number): void {
+    setNotDone(id: number): void {
       const todo = this.todos.find(x => x.id == id);
       if (todo) {
         todo.done = false;
