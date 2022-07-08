@@ -16,6 +16,16 @@ html.dark {
   padding: 10px;
 }
 
+.navigation-icon,
+.date,
+.days-of-week,
+.priority {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .selected-date {
   border: 1px white solid;
 }

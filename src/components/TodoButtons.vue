@@ -15,7 +15,7 @@ const editTodo = () => {
 </script>
 
 <template>
-  <div class="flex items-center h-10 gap-2">
+  <div class="flex items-center gap-2">
     <span v-if="!done" class="material-icons cursor-pointer lg-24" @click="markDone(id)"
       >done</span
     >

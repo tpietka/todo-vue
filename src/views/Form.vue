@@ -17,6 +17,7 @@ let form = ref({} as Todo);
 let showDatePicker = ref(false);
 
 onBeforeMount(() => {
+  form.value.priority = 1;
   if (props.id) {
     form.value = getTodo(Number(props.id));
   }
@@ -65,6 +66,19 @@ const goBack = () => {
           @click="showDatePicker = true"
           >calendar_month</span
         >
+      </span>
+    </div>
+    <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
+      <input-label label="Priority"></input-label>
+      <span
+        @click="form.priority = n"
+        v-for="n in 5"
+        :class="[
+          n <= form.priority ? 'text-red-500' : '',
+          'material-icons lg-36 cursor-pointer priority',
+        ]"
+      >
+        local_fire_department
       </span>
     </div>
     <div

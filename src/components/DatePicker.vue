@@ -92,14 +92,6 @@ const monthIndentation = computed(() => {
   grid-template-rows: repeat(7, 40px);
   align-items: center;
 }
-.navigation-icon,
-.date,
-.days-of-week {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 .backdrop {
   z-index: 30;
   width: 100vw;

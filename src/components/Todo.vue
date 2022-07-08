@@ -9,14 +9,27 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex justify-between gap-2 items-center">
-    <div :class="[todo.done ? 'opacity-60' : 'opacity-100', 'font-bold text-xl']">
-      <div class="leading-tight text-base">{{ todo.title }}</div>
-      <div>
+  <div class="flex-col justify-between gap-2 items-center">
+    <div class="leading-tight text-lg">{{ todo.title }}</div>
+    <div
+      :class="[
+        todo.done ? 'opacity-60' : 'opacity-100',
+        'font-bold flex items-end justify-between text-xl',
+      ]"
+    >
+      <div class="flex-col items-center mt-2">
         <todo-date v-if="!todo.done" :done="todo.done" :date="todo.deadline"></todo-date>
         <todo-date v-else :done="todo.done" :date="todo.completed"></todo-date>
+        <div class="flex mt-1 items-center">
+          <span
+            v-for="n in todo.priority"
+            class="text-red-500 material-icons lg-14 cursor-pointer priority"
+          >
+            local_fire_department
+          </span>
+        </div>
       </div>
+      <todo-buttons :id="todo.id" :done="todo.done"></todo-buttons>
     </div>
-    <todo-buttons :id="todo.id" :done="todo.done"></todo-buttons>
   </div>
 </template>

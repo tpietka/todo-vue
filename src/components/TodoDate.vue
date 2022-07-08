@@ -18,10 +18,10 @@ const isDeadlineToday = computed(() => {
   <span
     :class="[
       isDeadlineToday && !done ? 'text-red-500' : 'dark:text-slate-100 text-slate-800',
-      'flex text-xs items-center gap-1 date-container mt-2',
+      'flex text-xs items-center gap-1 date-container',
     ]"
   >
-    <span class="date"> {{ formatDateToDDMMYYYY(date) }}</span>
     <span class="material-icons lg-14"> {{ done ? 'task_alt' : 'schedule' }} </span>
+    <span class="date"> {{ formatDateToDDMMYYYY(date) }}</span>
   </span>
 </template>
