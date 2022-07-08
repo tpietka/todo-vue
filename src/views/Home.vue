@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { onBeforeMount, toRefs } from 'vue';
+import { toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
 const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
-const { getTodos } = useTodos();
-onBeforeMount(() => {
-  getTodos();
-});
 </script>
 <template>
   <div

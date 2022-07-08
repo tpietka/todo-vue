@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { onBeforeMount } from 'vue';
 import { useSettings } from './stores/settings';
+import { useTodos } from './stores/todos';
+const { getTodos } = useTodos();
 const { isDark } = useSettings();
 
 onBeforeMount(() => {
   isDark();
+  getTodos();
 });
 </script>
 
