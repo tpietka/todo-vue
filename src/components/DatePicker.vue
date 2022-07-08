@@ -89,7 +89,7 @@ const monthIndentation = computed(() => {
   text-align: center;
   grid-template-columns: repeat(7, 40px);
   grid-gap: 10px;
-  grid-template-rows: repeat(6, 40px);
+  grid-template-rows: repeat(7, 40px);
   align-items: center;
 }
 .navigation-icon,
