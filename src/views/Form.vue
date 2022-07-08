@@ -5,6 +5,7 @@ import { useTodos } from '../stores/todos';
 import InputLabel from '../components/InputLabel.vue';
 import { useRouter } from 'vue-router';
 import { isDateValid } from '../helpers/date';
+import DatePicker from '../components/DatePicker.vue';
 const { addTodo, editTodo, getTodo } = useTodos();
 const router = useRouter();
 
@@ -13,6 +14,7 @@ const props = defineProps<{
 }>();
 
 let form = ref({} as Todo);
+let showDatePicker = ref(false);
 
 onBeforeMount(() => {
   if (props.id) {
@@ -51,12 +53,19 @@ const goBack = () => {
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
       <input-label label="Deadline"></input-label>
-      <input
-        placeholder="YYYY-MM-DD"
-        class="w-full px-4 bg-slate-300 text-slate-800 h-10"
-        type="text"
-        v-model="form.deadline"
-      />
+      <span class="relative flex items-center">
+        <input
+          placeholder="YYYY-MM-DD"
+          class="w-full px-4 bg-slate-300 text-slate-800 h-10"
+          type="text"
+          v-model="form.deadline"
+        />
+        <span
+          class="material-icons cursor-pointer absolute dark:text-[#141921] mr-2 right-0"
+          @click="showDatePicker = true"
+          >calendar_month</span
+        >
+      </span>
     </div>
     <div
       class="fixed lg:relative lg:mt-4 lg:w-96 lg:mx-auto lg:gap-2 flex justify-center bottom-0 w-full"
@@ -69,4 +78,9 @@ const goBack = () => {
       </button>
     </div>
   </div>
+  <date-picker
+    v-if="showDatePicker"
+    @hide-date-picker="showDatePicker = false"
+    @update-date="(value: string) => form.deadline=value"
+  ></date-picker>
 </template>

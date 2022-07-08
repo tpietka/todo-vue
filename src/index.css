@@ -3,18 +3,21 @@
 @tailwind utilities;
 
 html {
-  background-color: rgb(241 245 249);
+  background-color: #F1F5F9;
 }
 
 html.dark {
-   background-color: rgb(20 25 33);
+   background-color: #141921;
 }
 
 .drag-over {
   border:dashed rgb(60 60 60) 5px;
   margin: -15px;
   padding: 10px;
+}
 
+.selected-date {
+  border: 1px white solid;
 }
 
 .material-icons.lg-18 {
