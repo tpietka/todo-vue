@@ -19,6 +19,7 @@ html.dark {
 .navigation-icon,
 .date,
 .days-of-week,
+.calendar-icon,
 .priority {
   -webkit-user-select: none;
   -moz-user-select: none;

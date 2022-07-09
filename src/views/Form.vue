@@ -62,7 +62,7 @@ const goBack = () => {
           v-model="form.deadline"
         />
         <span
-          class="material-icons cursor-pointer absolute dark:text-[#141921] mr-2 right-0"
+          class="material-icons cursor-pointer absolute calendar-icon dark:text-[#141921] mr-2 right-0"
           @click="showDatePicker = true"
           >calendar_month</span
         >

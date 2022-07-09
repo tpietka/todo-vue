@@ -19,6 +19,7 @@ const setDragId = (e: DragEvent, id: number) => {
 };
 
 const dropTodo = (e: DragEvent) => {
+  e.preventDefault();
   const id = e.dataTransfer?.getData('Text');
   const type = e.dataTransfer?.getData('StartType');
   if (id && type && type != props.label) {
