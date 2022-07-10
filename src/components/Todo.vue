@@ -13,7 +13,7 @@ let showMore = ref(false);
 
 <template>
   <div class="flex-col justify-between gap-2 items-center">
-    <div class="leading-tight text-lg flex items-center gap-2">
+    <div class="leading-tight text-lg flex items-center justify-between gap-2">
       <span>{{ todo.title }}</span>
       <span v-if="todo.description" class="flex">
         <span @click="showMore = true" v-if="!showMore" class="material-icons"
