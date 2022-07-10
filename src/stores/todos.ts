@@ -4,32 +4,34 @@ import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD, getTomorrowsD
 
 interface StoreState {
   todos: Todo[];
+  search: '',
 }
 export const useTodos = defineStore('todos', {
   state: (): StoreState => {
     return {
       todos: [],
+      search: ''
     }
   },
   getters: {
     doneTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return todo.done;
+        return todo.done && todo.title.includes(state.search);
       })
     },
     awaitingTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return !todo.done;
+        return !todo.done && todo.title.includes(state.search);;
       })
     },
     todayTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.done;
+        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.done && todo.title.includes(state.search);;
       })
     },
     nextDaysTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.done;
+        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.done && todo.title.includes(state.search);;
       })
     },
     deadlineTodosCount(): number {

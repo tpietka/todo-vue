@@ -3,7 +3,7 @@ import { toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
-const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
+const { todayTodos, nextDaysTodos, doneTodos, search } = toRefs(useTodos());
 </script>
 <template>
   <div
@@ -15,6 +15,21 @@ const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
       routeName="NewTodoForm"
       label="Add Todo"
     ></custom-button>
+  </div>
+  <div class="flex w-56 my-6 mx-auto lg:mx-0">
+    <div class="w-full relative flex justify-center">
+      <input
+        type="text"
+        class="px-2 text-slate-800"
+        v-model="search"
+        placeholder="Search for todo"
+      /><span
+        @click="search = ''"
+        v-if="search"
+        class="material-icons absolute cursor-pointer mx-4 right-0 text-slate-800"
+        >clear</span
+      >
+    </div>
   </div>
   <div class="lg:flex lg:w-full my-12 mx-6 lg:mx-auto lg:my-0">
     <todo-list
