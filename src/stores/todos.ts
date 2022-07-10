@@ -21,17 +21,17 @@ export const useTodos = defineStore('todos', {
     },
     awaitingTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return !todo.done && todo.title.includes(state.search);;
+        return !todo.done && todo.title.includes(state.search);
       })
     },
     todayTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.done && todo.title.includes(state.search);;
+        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.done && todo.title.includes(state.search);
       })
     },
     nextDaysTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.done && todo.title.includes(state.search);;
+        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.done && todo.title.includes(state.search);
       })
     },
     deadlineTodosCount(): number {
