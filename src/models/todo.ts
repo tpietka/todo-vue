@@ -4,6 +4,7 @@ export interface Todo {
     title: string;
     deadline: string;
     tags: string[];
+    description: string;
     priority: number;
     completed: string;
     done: boolean;

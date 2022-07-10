@@ -53,6 +53,14 @@ const goBack = () => {
       />
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
+      <input-label label="Description"></input-label>
+      <textarea
+        class="w-full px-4 bg-slate-300 text-slate-800"
+        rows="4"
+        v-model="form.description"
+      />
+    </div>
+    <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
       <input-label label="Deadline"></input-label>
       <span class="relative flex items-center">
         <input

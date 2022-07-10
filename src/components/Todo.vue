@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { Todo } from '../models/todo';
 import TodoButtons from './TodoButtons.vue';
 import TodoDate from './TodoDate.vue';
@@ -6,11 +7,23 @@ import TodoDate from './TodoDate.vue';
 defineProps<{
   todo: Todo;
 }>();
+
+let showMore = ref(false);
 </script>
 
 <template>
   <div class="flex-col justify-between gap-2 items-center">
-    <div class="leading-tight text-lg">{{ todo.title }}</div>
+    <div class="leading-tight text-lg flex items-center gap-2">
+      <span>{{ todo.title }}</span>
+      <span v-if="todo.description" class="flex">
+        <span @click="showMore = true" v-if="!showMore" class="material-icons"
+          >expand_more</span
+        ><span @click="showMore = false" v-else class="material-icons">expand_less</span>
+      </span>
+    </div>
+    <div v-if="showMore">
+      {{ todo.description }}
+    </div>
     <div class="font-bold flex items-end justify-between text-xl">
       <div :class="[todo.done ? 'bg-transparent' : '', 'flex-col items-center mt-2']">
         <todo-date v-if="!todo.done" :done="todo.done" :date="todo.deadline"></todo-date>
