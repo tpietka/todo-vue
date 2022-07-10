@@ -20,7 +20,7 @@ const { todayTodos, nextDaysTodos, doneTodos, search } = toRefs(useTodos());
     <div class="w-full relative flex justify-center">
       <input
         type="text"
-        class="px-2 text-slate-800"
+        class="px-2 text-slate-800 bg-slate-300"
         v-model="search"
         placeholder="Search for todo"
       /><span
