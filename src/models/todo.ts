@@ -6,6 +6,7 @@ export interface Todo {
     tags: string[];
     description: string;
     priority: number;
+    archived: boolean;
     completed: string;
     done: boolean;
 }

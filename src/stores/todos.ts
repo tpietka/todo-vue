@@ -4,34 +4,39 @@ import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD, getTomorrowsD
 
 interface StoreState {
   todos: Todo[];
-  search: '',
+  search: '';
 }
 export const useTodos = defineStore('todos', {
   state: (): StoreState => {
     return {
       todos: [],
-      search: ''
+      search: '',
     }
   },
   getters: {
     doneTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return todo.done && todo.title.includes(state.search);
+        return todo.done && !todo.archived && todo.title.includes(state.search);
+      })
+    },
+    archivedTodos: (state: StoreState): Todo[] => {
+      return state.todos.filter(todo => {
+        return todo.archived;
       })
     },
     awaitingTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return !todo.done && todo.title.includes(state.search);
+        return !todo.done && !todo.archived && todo.title.includes(state.search);
       })
     },
     todayTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.done && todo.title.includes(state.search);
+        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && todo.title.includes(state.search);
       })
     },
     nextDaysTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.done && todo.title.includes(state.search);
+        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && todo.title.includes(state.search);
       })
     },
     deadlineTodosCount(): number {
@@ -65,8 +70,15 @@ export const useTodos = defineStore('todos', {
         this.getTodos();
       }
       return this.todos.filter(todo => {
-        return todo.id == id;
+        return todo.id === id;
       })[0];
+    },
+    archiveTodo(id: number): void {
+      let todo = this.todos.filter(todo => {
+        return todo.id === id;
+      })[0];
+      todo.archived = true;
+      localStorage.setItem('todos', JSON.stringify(this.todos));
     },
     moveTodo(id: number, type: string): void {
       let todo = this.todos.filter(todo => {
@@ -134,6 +146,6 @@ export const useTodos = defineStore('todos', {
         this.todos = JSON.parse(localStorageTodos);
         this.sortTodos();
       }
-    }
+    },
   },
 })
