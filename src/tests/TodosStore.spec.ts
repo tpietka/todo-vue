@@ -9,6 +9,10 @@ const newTodo: Todo = {
   title: 'New todo',
   deadline: getTomorrowsDate(),
   done: false,
+  description: 'Test description',
+  archived: false,
+  priority: 2,
+  tags: [],
   created: '',
   completed: '',
 }
@@ -28,10 +32,10 @@ describe('Todos Store', () => {
 
   it('marks todo as done', () => {
     const { doneTodos, todos } = toRefs(useTodos());
-    const { addTodo, markDone } = useTodos();
+    const { addTodo, setDone } = useTodos();
     addTodo(newTodo);
     expect(doneTodos.value.length).toBe(0);
-    markDone(1);
+    setDone(1);
     expect(doneTodos.value.length).toBe(1);
     expect(todos.value[0].completed).not.toBeNull();
   })
@@ -44,12 +48,6 @@ describe('Todos Store', () => {
     expect(todayTodos.value.length).toBe(1);
   })
 
-  it('displays correct number of todos in counter', () => {
-    const { awaitingTodosCount } = toRefs(useTodos());
-    const { addTodo } = useTodos();
-    addTodo(newTodo);
-    expect(awaitingTodosCount.value).toBe(1);
-  })
 
   it('removes todo', () => {
     const { todos } = toRefs(useTodos());
@@ -58,6 +56,15 @@ describe('Todos Store', () => {
     expect(todos.value.length).toBe(1);
     deleteTodo(newTodo.id);
     expect(todos.value.length).toBe(0);
+  })
+
+  it('archives todo', () => {
+    const { addTodo, archiveTodo, getTodo } = useTodos();
+    addTodo(newTodo);
+    archiveTodo(1);
+    const todo = getTodo(1);
+    todo.archived
+    expect(todo.archived).toBe(true);
   })
 
   it('sets next correct id', () => {
