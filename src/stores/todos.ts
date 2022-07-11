@@ -39,15 +39,6 @@ export const useTodos = defineStore('todos', {
         return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && todo.title.includes(state.search);
       })
     },
-    deadlineTodosCount(): number {
-      return this.todayTodos.length;
-    },
-    awaitingTodosCount(): number {
-      return this.awaitingTodos.length;
-    },
-    doneTodosCount(): number {
-      return this.doneTodos.length;
-    }
   },
   actions: {
     addTodo(todo: Todo): void {
