@@ -1,6 +1,7 @@
 import { Todo } from '../models/todo';
 import { defineStore } from 'pinia'
 import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD, getTomorrowsDate } from '../helpers/date';
+import { useAlerts } from './alerts';
 
 interface StoreState {
   todos: Todo[];
@@ -48,6 +49,9 @@ export const useTodos = defineStore('todos', {
       this.todos.push(todo);
       localStorage.setItem('todos', JSON.stringify(this.todos));
       this.sortTodos();
+
+      const { displayAlert } = useAlerts();
+      displayAlert('Todo created', 'positive');
     },
     editTodo(id: number, updatedTodo: Todo): void {
       let todo = this.todos.filter(todo => {
@@ -55,6 +59,9 @@ export const useTodos = defineStore('todos', {
       })[0];
       todo = updatedTodo;
       localStorage.setItem('todos', JSON.stringify(this.todos));
+
+      const { displayAlert } = useAlerts();
+      displayAlert('Todo modified', 'positive');
     },
     getTodo(id: number): Todo {
       if (this.todos.length < 1) {
@@ -70,6 +77,9 @@ export const useTodos = defineStore('todos', {
       })[0];
       todo.archived = true;
       localStorage.setItem('todos', JSON.stringify(this.todos));
+
+      const { displayAlert } = useAlerts();
+      displayAlert('Todo archived', 'positive');
     },
     moveTodo(id: number, type: string): void {
       let todo = this.todos.filter(todo => {
@@ -116,6 +126,9 @@ export const useTodos = defineStore('todos', {
         todo.completed = getCurrentDate();
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
+
+      const { displayAlert } = useAlerts();
+      displayAlert('Todo done', 'positive');
     },
     setNotDone(id: number): void {
       const todo = this.todos.find(x => x.id == id);
@@ -124,12 +137,18 @@ export const useTodos = defineStore('todos', {
         todo.completed = '';
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
+
+      const { displayAlert } = useAlerts();
+      displayAlert('Todo undone', 'positive');
     },
     deleteTodo(id: number): void {
       this.todos = this.todos.filter(item => {
         return item.id != id;
       })
       localStorage.setItem('todos', JSON.stringify(this.todos));
+
+      const { displayAlert } = useAlerts();
+      displayAlert('Todo deleted', 'positive');
     },
     getTodos(): void {
       const localStorageTodos = localStorage.getItem('todos');
