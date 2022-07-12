@@ -2,6 +2,7 @@
 import { onBeforeMount } from 'vue';
 import { useSettings } from './stores/settings';
 import { useTodos } from './stores/todos';
+import Alert from './components/Alert.vue';
 const { getTodos } = useTodos();
 const { isDark } = useSettings();
 
@@ -12,6 +13,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
+  <alert></alert>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <router-view></router-view>
 </template>
