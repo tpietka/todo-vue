@@ -9,6 +9,7 @@ import DatePicker from '../components/DatePicker.vue';
 import ValidationErrorMessage from '../components/ValidationErrorMessage.vue';
 import { useValidations } from '../composables/validations';
 import { useAlerts } from '../stores/alerts';
+import CustomButton from '../components/CustomButton.vue';
 
 const props = defineProps<{
   id?: number | string;
@@ -95,7 +96,7 @@ const v = useVuelidate(rules, { form });
           v-model="form.deadline"
         />
         <span
-          class="material-icons cursor-pointer absolute calendar-icon dark:text-[#141921] mr-2 right-0"
+          class="material-icons cursor-pointer absolute not-selectable dark:text-[#141921] mr-2 right-0"
           @click="showDatePicker = true"
           >calendar_month</span
         >
@@ -113,22 +114,28 @@ const v = useVuelidate(rules, { form });
         @click="form.priority = n"
         v-for="n in 5"
         :class="[
-          n <= form.priority ? 'text-red-500' : '',
-          'material-icons lg-36 cursor-pointer priority',
+          n <= form.priority ? 'text-red-500' : 'text-slate-300',
+          'material-icons lg-36 cursor-pointer not-selectable',
         ]"
       >
         local_fire_department
       </span>
     </div>
     <div
-      class="fixed lg:relative lg:mt-4 lg:w-96 lg:mx-auto lg:gap-2 flex justify-center bottom-0 w-full"
+      class="fixed lg:relative lg:mt-4 h-14 lg:w-96 lg:mx-auto lg:gap-2 flex justify-center bottom-0 w-full"
     >
-      <button class="h-full py-3 w-full bg-green-500" @click="submit" id="save-todo">
-        Save
-      </button>
-      <button class="h-full py-3 w-full bg-red-500" @click="goBack" id="go-back">
-        Go Back
-      </button>
+      <custom-button
+        @click="submit"
+        class="bg-green-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-green-600"
+        id="btn-save-form"
+        label="Save"
+      ></custom-button>
+      <custom-button
+        @click="goBack"
+        class="bg-red-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-red-600"
+        id="btn-leave-form"
+        label="Go back"
+      ></custom-button>
     </div>
   </div>
   <date-picker
