@@ -16,9 +16,14 @@ let showMore = ref(false);
     <div class="leading-tight text-lg flex items-center justify-between gap-2">
       <span>{{ todo.title }}</span>
       <span v-if="todo.description" class="flex">
-        <span @click="showMore = true" v-if="!showMore" class="material-icons"
+        <span
+          @click="showMore = true"
+          v-if="!showMore"
+          class="material-icons cursor-pointer"
           >expand_more</span
-        ><span @click="showMore = false" v-else class="material-icons">expand_less</span>
+        ><span @click="showMore = false" v-else class="material-icons cursor-pointer"
+          >expand_less</span
+        >
       </span>
     </div>
     <div v-if="showMore">
@@ -31,7 +36,7 @@ let showMore = ref(false);
         <div class="flex mt-1 items-center">
           <span
             v-for="n in todo.priority"
-            class="text-red-500 material-icons lg-14 cursor-pointer priority"
+            class="text-red-500 material-icons lg-14 priority"
           >
             local_fire_department
           </span>

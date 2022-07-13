@@ -9,6 +9,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.0-alpha.42",
+    "@vuelidate/validators": "^2.0.0-alpha.30",
     "moment": "^2.29.3",
     "pinia": "^2.0.14",
     "vue": "^3.2.25",
