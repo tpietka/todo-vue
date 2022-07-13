@@ -21,6 +21,10 @@ export const getCurrentDateDDMMYYYY = () => {
   return moment().format('DD-MM-YYYY');
 };
 
+export const getFirstDayOfMonth = () => {
+  return moment().startOf('month').format('YYYY-MM-DD');
+}
+
 export const getTomorrowsDate = () => {
   return moment().add(1, 'days').format(dateFormat);
 };
