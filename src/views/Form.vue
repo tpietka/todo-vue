@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { Todo } from '../models/todo';
 import { useTodos } from '../stores/todos';
-import InputLabel from '../components/InputLabel.vue';
 import { useRouter } from 'vue-router';
-import { isDateValid } from '../helpers/date';
+import { useVuelidate } from '@vuelidate/core';
+import InputLabel from '../components/InputLabel.vue';
 import DatePicker from '../components/DatePicker.vue';
-const { addTodo, editTodo, getTodo } = useTodos();
-const router = useRouter();
+import ValidationErrorMessage from '../components/ValidationErrorMessage.vue';
+import { useValidations } from '../composables/validations';
+import { useAlerts } from '../stores/alerts';
 
 const props = defineProps<{
   id?: number | string;
@@ -16,6 +17,7 @@ const props = defineProps<{
 let form = ref({} as Todo);
 let showDatePicker = ref(false);
 
+const { addTodo, editTodo, getTodo } = useTodos();
 onBeforeMount(() => {
   form.value.priority = 1;
   if (props.id) {
@@ -23,11 +25,12 @@ onBeforeMount(() => {
   }
 });
 
+const router = useRouter();
+const { displayAlert } = useAlerts();
 const submit = async () => {
-  if (!isDateValid(form.value.deadline)) {
-    alert('Invalid date format');
-  } else if (!form.value.title) {
-    alert('Title cannot be empty');
+  v.value.$touch();
+  if (v.value.$invalid) {
+    displayAlert('Errors detected in form', 'warning');
   } else {
     if (props.id) {
       editTodo(Number(props.id), form.value);
@@ -40,6 +43,19 @@ const submit = async () => {
 const goBack = () => {
   router.back();
 };
+
+const { validateDateFormat, validateRequired } = useValidations();
+const rules = computed(() => ({
+  form: {
+    title: { required: validateRequired('Title') },
+    description: { required: validateRequired('Description') },
+    deadline: {
+      required: validateRequired('Deadline'),
+      format: validateDateFormat(),
+    },
+  },
+}));
+const v = useVuelidate(rules, { form });
 </script>
 <template>
   <div class="w-full mt-12 flex-col">
@@ -51,6 +67,11 @@ const goBack = () => {
         type="text"
         v-model="form.title"
       />
+      <validation-error-message
+        class="mt-1"
+        :display-error="v.form.title.$error"
+        :error-messages="v.form.title.$errors"
+      ></validation-error-message>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
       <input-label label="Description"></input-label>
@@ -59,6 +80,10 @@ const goBack = () => {
         rows="4"
         v-model="form.description"
       />
+      <validation-error-message
+        :display-error="v.form.description.$error"
+        :error-messages="v.form.description.$errors"
+      ></validation-error-message>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
       <input-label label="Deadline"></input-label>
@@ -75,6 +100,12 @@ const goBack = () => {
           >calendar_month</span
         >
       </span>
+      <validation-error-message
+        class="mt-1"
+        :display-error="v.form.deadline.$error"
+        :error-messages="v.form.deadline.$errors"
+      >
+      </validation-error-message>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
       <input-label label="Priority"></input-label>
