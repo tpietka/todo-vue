@@ -22,7 +22,7 @@ export const useTodos = defineStore('todos', {
     },
     archivedTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return todo.archived;
+        return todo.archived && todo.title.includes(state.search);
       })
     },
     awaitingTodos: (state: StoreState): Todo[] => {

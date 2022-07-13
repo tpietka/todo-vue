@@ -3,6 +3,7 @@ import { toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
+import Search from '../components/Search.vue';
 const { archivedTodos } = toRefs(useTodos());
 </script>
 <template>
@@ -16,12 +17,15 @@ const { archivedTodos } = toRefs(useTodos());
       label="Active Todos"
     ></custom-button>
   </div>
-  <div class="lg:flex lg:w-2/6 my-12 mx-6 lg:justify-center lg:my-12 lg:mx-auto">
-    <todo-list
-      class="w-full"
-      label="Archived"
-      :todos="archivedTodos"
-      no-todos-message="You have no archived todos"
-    ></todo-list>
+  <div class="mx-6 lg:mx-auto">
+    <search></search>
+    <div class="lg:flex lg:w-full my-10">
+      <todo-list
+        class="w-full"
+        label="Archived"
+        :todos="archivedTodos"
+        no-todos-message="You have no archived todos"
+      ></todo-list>
+    </div>
   </div>
 </template>
