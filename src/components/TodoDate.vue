@@ -4,20 +4,19 @@ import {
   getCurrentDate,
   formatDateToYYYYMMDD,
   formatDateToDDMMYYYY,
+  isDeadlineTodayOrPastDeadline,
 } from '../helpers/date';
 const props = defineProps<{
   done: boolean;
   date: string;
 }>();
-
-const isDeadlineToday = computed(() => {
-  return getCurrentDate() >= formatDateToYYYYMMDD(props.date);
-});
 </script>
 <template>
   <span
     :class="[
-      isDeadlineToday && !done ? 'text-red-500' : 'dark:text-slate-100 text-slate-800',
+      isDeadlineTodayOrPastDeadline(date) && !done
+        ? 'text-red-500'
+        : 'dark:text-slate-100 text-slate-800',
       'flex text-xs items-center gap-1 date-container',
     ]"
   >

@@ -42,11 +42,7 @@ let showMore = ref(false);
           </span>
         </div>
       </div>
-      <todo-buttons
-        :archived="todo.archived"
-        :id="todo.id"
-        :done="todo.done"
-      ></todo-buttons>
+      <todo-buttons :todo="todo"></todo-buttons>
     </div>
   </div>
 </template>
