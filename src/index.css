@@ -20,7 +20,7 @@ html.dark {
 .date,
 .days-of-week,
 .calendar-icon,
-.priority {
+.not-selectable {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

@@ -7,8 +7,10 @@ const { theme } = toRefs(useSettings());
 </script>
 
 <template>
-  <nav class="w-full text-slate-800 dark:text-slate-300 dark:bg-slate-800 bg-slate-300">
-    <div class="flex lg:w-10/12 mx-6 lg:mx-auto items-center">
+  <nav
+    class="w-full h-14 fixed z-30 top-0 text-slate-800 dark:text-slate-300 dark:bg-slate-800 bg-slate-300"
+  >
+    <div class="flex h-full z-60 lg:w-10/12 mx-6 lg:mx-auto items-center">
       <div @click="$router.push('/')" class="text-2xl w-full">MyTodos</div>
       <div class="w-full flex justify-center">
         <span
@@ -19,7 +21,7 @@ const { theme } = toRefs(useSettings());
         >
         <span
           v-if="theme == 'dark'"
-          class="material-icons cursor-pointer"
+          class="material-icons not-selectable cursor-pointer"
           @click="setLight"
           >light_mode</span
         >
