@@ -8,7 +8,7 @@ const { theme } = toRefs(useSettings());
 
 <template>
   <div class="h-full w-full text-slate-800 dark:text-slate-100">
-    <div class="h-full lg:w-10/12 lg:mx-auto py-4 lg:py-8">
+    <div class="h-full lg:w-10/12 lg:mx-auto py-4 mb-10 lg:py-8">
       <div class="flex justify-between mx-6 lg:mx-0">
         <div class="text-4xl w-full">MyTodos</div>
         <div class="mt-2 w-full flex justify-center">
