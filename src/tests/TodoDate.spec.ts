@@ -11,7 +11,7 @@ const slateColor = 'text-slate-800';
 const deadlineIcon = 'schedule';
 const doneIcon = 'task_alt';
 
-describe('TodosCounter', () => {
+describe('Todo date', () => {
   beforeEach(() => {
     wrapper = mount(TodoDate, {
       props: {

@@ -4,22 +4,23 @@ import { toRefs } from 'vue';
 import { Todo } from '../models/todo';
 import { getCurrentDate, getTomorrowsDate } from '../helpers/date';
 
-const newTodo: Todo = {
-  id: 0,
-  title: 'New todo',
-  deadline: getTomorrowsDate(),
-  done: false,
-  description: 'Test description',
-  archived: false,
-  priority: 2,
-  tags: [],
-  created: '',
-  completed: '',
-}
+let newTodo = {} as Todo;
 
 describe('Todos Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
+    newTodo = {
+      id: 0,
+      title: 'New todo',
+      deadline: getTomorrowsDate(),
+      done: false,
+      description: 'Test description',
+      archived: false,
+      priority: 2,
+      tags: [],
+      created: '',
+      completed: '',
+    }
   })
 
   it('adds todo', () => {
@@ -42,6 +43,7 @@ describe('Todos Store', () => {
 
   it('correctly set todo as for today with expiring deadline', () => {
     const { todayTodos } = toRefs(useTodos());
+    expect(todayTodos.value.length).toBe(0);
     const { addTodo } = useTodos();
     newTodo.deadline = getCurrentDate();
     addTodo(newTodo);
@@ -74,5 +76,17 @@ describe('Todos Store', () => {
     addTodo(newTodo);
     expect(todos.value.length).toBe(2);
     expect(todos.value[todos.value.length - 1].id).toBe(2);
+  })
+
+  it('filter list of todos by search value', () => {
+    const { search, awaitingTodos } = toRefs(useTodos());
+    const { addTodo } = useTodos();
+    let secondTodo = { ...newTodo };
+    secondTodo.title = 'Second Todo';
+    addTodo(newTodo);
+    addTodo(secondTodo);
+    expect(awaitingTodos.value.length).toBe(2);
+    search.value = 'second';
+    expect(awaitingTodos.value.length).toBe(1);
   })
 })

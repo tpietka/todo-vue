@@ -3,9 +3,13 @@ import { defineStore } from 'pinia'
 import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD, getTomorrowsDate } from '../helpers/date';
 import { useAlerts } from './alerts';
 
+const isTextIncluded = (originalValue: string, searchValue: string) => {
+  return originalValue.toLowerCase().includes(searchValue.toLowerCase())
+}
+
 interface StoreState {
   todos: Todo[];
-  search: '';
+  search: string;
 }
 export const useTodos = defineStore('todos', {
   state: (): StoreState => {
@@ -17,27 +21,27 @@ export const useTodos = defineStore('todos', {
   getters: {
     doneTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return todo.done && !todo.archived && todo.title.includes(state.search);
+        return todo.done && !todo.archived && isTextIncluded(todo.title, state.search);
       })
     },
     archivedTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return todo.archived && todo.title.includes(state.search);
+        return todo.archived && isTextIncluded(todo.title, state.search);
       })
     },
     awaitingTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return !todo.done && !todo.archived && todo.title.includes(state.search);
+        return !todo.done && !todo.archived && isTextIncluded(todo.title, state.search);
       })
     },
     todayTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && todo.title.includes(state.search);
+        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search);
       })
     },
     nextDaysTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && todo.title.includes(state.search);
+        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search);
       })
     },
   },
