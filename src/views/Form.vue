@@ -15,7 +15,10 @@ const props = defineProps<{
   id?: number | string;
 }>();
 
-let form = ref({} as Todo);
+let tag = ref('');
+let form = ref({
+  tags: [] as string[],
+} as Todo);
 let showDatePicker = ref(false);
 
 const { addTodo, editTodo, getTodo } = useTodos();
@@ -25,6 +28,15 @@ onBeforeMount(() => {
     form.value = getTodo(Number(props.id));
   }
 });
+
+const addTag = () => {
+  if (tag.value && tag.value != ' ') {
+    form.value.tags.push(tag.value);
+    tag.value = '';
+  } else {
+    tag.value = '';
+  }
+};
 
 const router = useRouter();
 const { displayAlert } = useAlerts();
@@ -44,6 +56,8 @@ const submit = async () => {
 const goBack = () => {
   router.back();
 };
+
+var randomColor = 'bg-[#' + Math.floor(Math.random() * 16777215).toString(16) + ']';
 
 const { validateDateFormat, validateRequired } = useValidations();
 const rules = computed(() => ({
@@ -85,6 +99,25 @@ const v = useVuelidate(rules, { form });
         :display-error="v.form.description.$error"
         :error-messages="v.form.description.$errors"
       ></validation-error-message>
+    </div>
+    <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
+      <input-label label="Tags"></input-label>
+      <input
+        class="w-full px-4 bg-slate-300 text-slate-800 h-10"
+        type="text"
+        v-model="tag"
+        @keydown.space="addTag"
+      />
+      <div v-if="form.tags.length > 0" class="flex mt-4 gap-2">
+        <div
+          class="p-2 flex items-center gap-2 border-2 rounded-xl border-slate-800 dark:border-slate-100"
+          v-for="(tag, index) in form.tags"
+          :key="index"
+        >
+          {{ tag }}
+          <span class="material-icons" @click="form.tags.splice(index, 1)">cancel</span>
+        </div>
+      </div>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
       <input-label label="Deadline"></input-label>
