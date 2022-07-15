@@ -20,7 +20,7 @@ const color = computed(() => {
       v-if="display"
       :class="[
         color,
-        'fixed h-10 flex justify-center items-center font-bold text-slate-800 dark:text-slate-800 top-0 w-full lg:w-1/4',
+        'fixed z-50 h-10 flex justify-center items-center font-bold text-slate-800 dark:text-slate-800 top-0 w-full lg:w-1/4',
       ]"
     >
       {{ message }}
