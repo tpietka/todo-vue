@@ -4,6 +4,7 @@ import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
 import Search from '../components/Search.vue';
+import Tags from '../components/Tags.vue';
 const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
 </script>
 <template>
@@ -25,6 +26,7 @@ const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
   </div>
   <div class="mx-6 lg:mx-auto">
     <search></search>
+    <tags></tags>
     <div class="lg:flex lg:w-full my-10">
       <todo-list
         class="w-full"

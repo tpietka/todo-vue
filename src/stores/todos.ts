@@ -1,51 +1,81 @@
 import { Todo } from '../models/todo';
-import { defineStore } from 'pinia'
+import { defineStore, Store } from 'pinia'
 import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD, getTomorrowsDate } from '../helpers/date';
 import { useAlerts } from './alerts';
 
-const isTextIncluded = (originalValue: string, searchValue: string) => {
+const isTextIncluded = (originalValue: string, searchValue: string): boolean => {
   return originalValue.toLowerCase().includes(searchValue.toLowerCase())
+}
+
+const hasSelectedTag = (todoTags: string[], searchedTags: string[]) => {
+  if (searchedTags.length > 0) {
+    return searchedTags.some(tag => todoTags.includes(tag));
+  }
+  return true;
+}
+
+const isDeadline = (date: string) => {
+  return getCurrentDate() >= formatDateToYYYYMMDD(date)
 }
 
 interface StoreState {
   todos: Todo[];
   search: string;
+  selectedTags: string[];
 }
 export const useTodos = defineStore('todos', {
   state: (): StoreState => {
     return {
       todos: [],
       search: '',
+      selectedTags: [],
     }
   },
   getters: {
     doneTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return todo.done && !todo.archived && isTextIncluded(todo.title, state.search);
+        return todo.done && !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
+    },
+    allTags: (state: StoreState): string[] => {
+      let tags: string[] = [];
+      state.todos.forEach(todo => {
+        if (todo.tags?.length > 0)
+          todo.tags.forEach(tag => {
+            tags.push(tag);
+          })
+      })
+      return [...new Set(tags)];
     },
     archivedTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return todo.archived && isTextIncluded(todo.title, state.search);
+        return todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
     awaitingTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return !todo.done && !todo.archived && isTextIncluded(todo.title, state.search);
+        return !todo.done && !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
     todayTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() >= formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search);
+        return isDeadline(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
     nextDaysTodos: (state: StoreState): Todo[] => {
       return state.todos.filter(todo => {
-        return getCurrentDate() < formatDateToYYYYMMDD(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search);
+        return !isDeadline(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
   },
   actions: {
+    toggleTag(tag: string) {
+      if (this.selectedTags.includes(tag)) {
+        this.selectedTags.splice(this.selectedTags.indexOf(tag), 1);
+      } else {
+        this.selectedTags.push(tag);
+      }
+    },
     addTodo(todo: Todo): void {
       todo.id = this.getNextId();
       todo.done = false;
@@ -54,8 +84,7 @@ export const useTodos = defineStore('todos', {
       localStorage.setItem('todos', JSON.stringify(this.todos));
       this.sortTodos();
 
-      const { displayAlert } = useAlerts();
-      displayAlert('Todo created', 'positive');
+      this.displayAlert('Todo created', 'positive');
     },
     editTodo(id: number, updatedTodo: Todo): void {
       let todo = this.todos.filter(todo => {
@@ -64,8 +93,7 @@ export const useTodos = defineStore('todos', {
       todo = updatedTodo;
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      const { displayAlert } = useAlerts();
-      displayAlert('Todo modified', 'positive');
+      this.displayAlert('Todo modified', 'positive');
     },
     getTodo(id: number): Todo {
       if (this.todos.length < 1) {
@@ -82,8 +110,7 @@ export const useTodos = defineStore('todos', {
       todo.archived = true;
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      const { displayAlert } = useAlerts();
-      displayAlert('Todo archived', 'positive');
+      this.displayAlert('Todo archived', 'positive');
     },
     moveTodo(id: number, type: string): void {
       let todo = this.todos.filter(todo => {
@@ -131,8 +158,11 @@ export const useTodos = defineStore('todos', {
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
+      this.displayAlert('Todo done', 'positive');
+    },
+    displayAlert(message: string, type: string) {
       const { displayAlert } = useAlerts();
-      displayAlert('Todo done', 'positive');
+      displayAlert(message, type);
     },
     setNotDone(id: number): void {
       const todo = this.todos.find(x => x.id == id);
@@ -142,8 +172,7 @@ export const useTodos = defineStore('todos', {
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      const { displayAlert } = useAlerts();
-      displayAlert('Todo undone', 'positive');
+      this.displayAlert('Todo undone', 'positive');
     },
     deleteTodo(id: number): void {
       this.todos = this.todos.filter(item => {
@@ -151,8 +180,7 @@ export const useTodos = defineStore('todos', {
       })
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      const { displayAlert } = useAlerts();
-      displayAlert('Todo deleted', 'positive');
+      this.displayAlert('Todo deleted', 'positive');
     },
     getTodos(): void {
       const localStorageTodos = localStorage.getItem('todos');
