@@ -3,7 +3,6 @@ import { toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
-import Search from '../components/Search.vue';
 const { archivedTodos } = toRefs(useTodos());
 </script>
 <template>
@@ -18,7 +17,6 @@ const { archivedTodos } = toRefs(useTodos());
     ></custom-button>
   </div>
   <div class="mx-6 lg:mx-auto">
-    <search></search>
     <div class="lg:flex lg:w-full my-10">
       <todo-list
         class="w-full"

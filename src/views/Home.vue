@@ -3,13 +3,11 @@ import { toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
-import Search from '../components/Search.vue';
-import Tags from '../components/Tags.vue';
 const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
 </script>
 <template>
   <div
-    class="flex fixed z-20 h-14 lg:gap-2 justify-center bottom-0 w-full lg:relative lg:justify-center lg:my-12"
+    class="flex fixed z-20 h-14 lg:h-auto lg:gap-2 justify-center bottom-0 w-full lg:relative lg:justify-center lg:my-12"
   >
     <custom-button
       class="bg-green-700 text-slate-100 font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-green-600"
@@ -25,8 +23,6 @@ const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
     ></custom-button>
   </div>
   <div class="mx-6 lg:mx-auto">
-    <search></search>
-    <tags></tags>
     <div class="lg:flex lg:w-full my-10">
       <todo-list
         class="w-full"

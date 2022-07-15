@@ -13,7 +13,7 @@ const isTagSelected = computed(() => selectedTags.value.includes(props.tag));
 
 <template>
   <div
-    class="cursor-pointer p-2 border-2 rounded-xl border-slate-800 dark:border-slate-100"
+    class="cursor-pointer p-1.5 text-sm border-2 rounded-xl border-slate-800 dark:border-slate-100"
     :class="isTagSelected ? 'bg-slate-500' : 'bg-inherit'"
   >
     {{ tag }}
