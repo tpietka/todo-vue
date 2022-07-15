@@ -107,6 +107,7 @@ const v = useVuelidate(rules, { form });
         type="text"
         v-model="tag"
         @keydown.space="addTag"
+        @keydown.enter="addTag"
       />
       <div v-if="form.tags.length > 0" class="flex mt-4 gap-2">
         <div
@@ -115,7 +116,9 @@ const v = useVuelidate(rules, { form });
           :key="index"
         >
           {{ tag }}
-          <span class="material-icons" @click="form.tags.splice(index, 1)">cancel</span>
+          <span class="material-icons cursor-pointer" @click="form.tags.splice(index, 1)"
+            >cancel</span
+          >
         </div>
       </div>
     </div>

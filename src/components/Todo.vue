@@ -13,7 +13,7 @@ let showMore = ref(false);
 
 <template>
   <div class="flex-col justify-between gap-2 items-center">
-    <div class="leading-tight text-lg flex items-center justify-between gap-2">
+    <div class="leading-tight text-xl flex items-center justify-between gap-2">
       <span>{{ todo.title }}</span>
       <span v-if="todo.description" class="flex">
         <span
@@ -27,7 +27,20 @@ let showMore = ref(false);
       </span>
     </div>
     <div v-if="showMore">
-      {{ todo.description }}
+      <div class="">
+        <div class="text-md py-2 text-slate-400">
+          {{ todo.description }}
+        </div>
+        <div class="flex gap-1">
+          <span
+            class="px-2 py-0.2 text-[10px] border-2 rounded-xl border-slate-800 dark:border-slate-100"
+            v-for="tag in todo.tags"
+            :key="tag"
+          >
+            {{ tag }}
+          </span>
+        </div>
+      </div>
     </div>
     <div class="font-bold flex items-end justify-between text-xl">
       <div :class="[todo.done ? 'bg-transparent' : '', 'flex-col items-center mt-2']">
