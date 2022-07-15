@@ -17,18 +17,16 @@ const updateDate = (n: number) => {
   emit('hideDatePicker');
 };
 
-const daysInMonth = computed(() => {
-  return moment().year(selectedYear.value).month(selectedMonth.value).daysInMonth();
-});
-const month = computed(() => {
-  return moment().year(selectedYear.value).month(selectedMonth.value).format('MM');
-});
-const year = computed(() => {
-  return moment().year(selectedYear.value).format('YYYY');
-});
-const monthIndentation = computed(() => {
-  return moment().year(selectedYear.value).month(selectedMonth.value).isoWeekday() - 1;
-});
+const daysInMonth = computed(() =>
+  moment().year(selectedYear.value).month(selectedMonth.value).daysInMonth()
+);
+const month = computed(() =>
+  moment().year(selectedYear.value).month(selectedMonth.value).format('MM')
+);
+const year = computed(() => moment().year(selectedYear.value).format('YYYY'));
+const monthIndentation = computed(
+  () => moment().year(selectedYear.value).month(selectedMonth.value).isoWeekday() - 1
+);
 </script>
 
 <template>

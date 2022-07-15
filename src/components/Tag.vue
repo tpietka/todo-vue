@@ -8,9 +8,7 @@ const props = defineProps<{
   tag: string;
 }>();
 
-const isTagSelected = computed(() => {
-  return selectedTags.value.includes(props.tag);
-});
+const isTagSelected = computed(() => selectedTags.value.includes(props.tag));
 </script>
 
 <template>

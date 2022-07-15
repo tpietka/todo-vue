@@ -11,13 +11,11 @@ const props = defineProps<{
   date: string;
 }>();
 
-const isDeadline = computed(() => {
-  return isDeadlineTodayOrPastDeadline(props.date) && !props.done;
-});
+const isDeadline = computed(
+  () => isDeadlineTodayOrPastDeadline(props.date) && !props.done
+);
 
-const formattedDate = computed(() => {
-  return formatDateToDDMMYYYY(props.date);
-});
+const formattedDate = computed(() => formatDateToDDMMYYYY(props.date));
 </script>
 <template>
   <span

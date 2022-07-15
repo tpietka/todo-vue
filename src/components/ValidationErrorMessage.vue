@@ -12,7 +12,7 @@ const props = defineProps<{
   errorMessages: ErrorObject[];
 }>();
 
-const messageToDisplay = computed((): string => {
-  return props.errorMessages[0].$message as string;
-});
+const messageToDisplay = computed((): string =>
+  props.errorMessages[0].$message.toString()
+);
 </script>
