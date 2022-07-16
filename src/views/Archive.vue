@@ -3,7 +3,8 @@ import { toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
-const { archivedTodos } = toRefs(useTodos());
+import Tags from '../components/Tags.vue';
+const { archivedTodos, archivedTags } = toRefs(useTodos());
 </script>
 <template>
   <div
@@ -17,7 +18,8 @@ const { archivedTodos } = toRefs(useTodos());
     ></custom-button>
   </div>
   <div class="mx-6 lg:mx-auto">
-    <div class="lg:flex lg:w-full my-10">
+    <tags :tags="archivedTags"></tags>
+    <div class="lg:flex lg:mx-auto lg:w-1/2 my-10">
       <todo-list
         class="w-full"
         label="Archived"

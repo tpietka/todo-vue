@@ -3,7 +3,8 @@ import { toRefs } from 'vue';
 import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
-const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
+import Tags from '../components/Tags.vue';
+const { todayTodos, nextDaysTodos, doneTodos, todosTags } = toRefs(useTodos());
 </script>
 <template>
   <div
@@ -23,6 +24,7 @@ const { todayTodos, nextDaysTodos, doneTodos } = toRefs(useTodos());
     ></custom-button>
   </div>
   <div class="mx-6 lg:mx-auto">
+    <tags :tags="todosTags"></tags>
     <div class="lg:flex lg:w-full my-10">
       <todo-list
         class="w-full"
