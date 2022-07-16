@@ -32,14 +32,19 @@ export const useTodos = defineStore('todos', {
     }
   },
   getters: {
-    doneTodos: (state: StoreState): Todo[] => {
+    doneTodos(state: StoreState): Todo[] {
       return state.todos.filter(todo => {
         return todo.done && !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
-    allTags: (state: StoreState): string[] => {
+    notArchivedTodos(state: StoreState): Todo[] {
+      return state.todos.filter(todo => {
+        return !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
+      })
+    },
+    todosTags(state: StoreState): string[] {
       let tags: string[] = [];
-      state.todos.forEach(todo => {
+      this.notArchivedTodos.forEach(todo => {
         if (todo.tags?.length > 0)
           todo.tags.forEach(tag => {
             tags.push(tag);
@@ -47,22 +52,32 @@ export const useTodos = defineStore('todos', {
       })
       return [...new Set(tags)];
     },
-    archivedTodos: (state: StoreState): Todo[] => {
+    archivedTodos(state: StoreState): Todo[] {
       return state.todos.filter(todo => {
         return todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
-    awaitingTodos: (state: StoreState): Todo[] => {
+    archivedTags(): string[] {
+      let tags: string[] = [];
+      this.archivedTodos.forEach(todo => {
+        if (todo.tags?.length > 0)
+          todo.tags.forEach(tag => {
+            tags.push(tag);
+          })
+      })
+      return [...new Set(tags)];
+    },
+    awaitingTodos(state: StoreState): Todo[] {
       return state.todos.filter(todo => {
         return !todo.done && !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
-    todayTodos: (state: StoreState): Todo[] => {
+    todayTodos(state: StoreState): Todo[] {
       return state.todos.filter(todo => {
         return isDeadline(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
-    nextDaysTodos: (state: StoreState): Todo[] => {
+    nextDaysTodos(state: StoreState): Todo[] {
       return state.todos.filter(todo => {
         return !isDeadline(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
