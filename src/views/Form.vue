@@ -10,11 +10,13 @@ import ValidationErrorMessage from '../components/ValidationErrorMessage.vue';
 import { useValidations } from '../composables/validations';
 import { useAlerts } from '../stores/alerts';
 import CustomButton from '../components/CustomButton.vue';
+import DialogVue from '../components/Dialog.vue';
 
 const props = defineProps<{
   id?: number | string;
 }>();
 
+let displayDialog = ref(false);
 let tag = ref('');
 let form = ref({
   tags: [] as string[],
@@ -167,12 +169,26 @@ const v = useVuelidate(rules, { form });
         label="Save"
       ></custom-button>
       <custom-button
-        @click="goBack"
+        @click="displayDialog = true"
         class="bg-red-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-red-600"
         id="btn-leave-form"
         label="Go back"
       ></custom-button>
     </div>
+    <dialog-vue :display="displayDialog" message="Are you sure?">
+      <custom-button
+        @click="goBack"
+        class="bg-slate-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48"
+        id="btn-save-form"
+        label="Go back"
+      ></custom-button>
+      <custom-button
+        @click="displayDialog = false"
+        class="bg-slate-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48"
+        id="btn-leave-form"
+        label="Stay"
+      ></custom-button>
+    </dialog-vue>
   </div>
   <date-picker
     v-if="showDatePicker"

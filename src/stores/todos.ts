@@ -42,7 +42,7 @@ export const useTodos = defineStore('todos', {
         return !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
-    todosTags(state: StoreState): string[] {
+    todosTags(): string[] {
       let tags: string[] = [];
       this.notArchivedTodos.forEach(todo => {
         if (todo.tags?.length > 0)
