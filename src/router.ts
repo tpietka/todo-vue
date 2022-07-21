@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { useTodos } from './stores/todos';
+import { toRefs } from 'vue';
 
 const routes = [
   {
@@ -20,4 +22,9 @@ const routes = [
 export const router = createRouter({
   history: createWebHistory(),
   routes: routes
+})
+
+router.beforeEach(() => {
+  const { selectedTags } = toRefs(useTodos());
+  selectedTags.value = [];
 })
