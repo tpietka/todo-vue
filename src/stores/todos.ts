@@ -33,18 +33,20 @@ export const useTodos = defineStore('todos', {
   },
   getters: {
     doneTodos(state: StoreState): Todo[] {
-      return state.todos.filter(todo => {
-        return todo.done && !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
+      return this.activeTodos.filter(todo => {
+        return todo.done
+          && isTextIncluded(todo.title, state.search)
+          && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
-    notArchivedTodos(state: StoreState): Todo[] {
+    activeTodos(state: StoreState): Todo[] {
       return state.todos.filter(todo => {
-        return !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
+        return !todo.archived;
       })
     },
-    todosTags(): string[] {
+    activeTags(): string[] {
       let tags: string[] = [];
-      this.notArchivedTodos.forEach(todo => {
+      this.activeTodos.forEach(todo => {
         if (todo.tags?.length > 0)
           todo.tags.forEach(tag => {
             tags.push(tag);
@@ -54,7 +56,12 @@ export const useTodos = defineStore('todos', {
     },
     archivedTodos(state: StoreState): Todo[] {
       return state.todos.filter(todo => {
-        return todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
+        return todo.archived;
+      })
+    },
+    archivedSelectedTodos(state: StoreState): Todo[] {
+      return this.archivedTodos.filter(todo => {
+        return isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
     archivedTags(): string[] {
@@ -68,18 +75,25 @@ export const useTodos = defineStore('todos', {
       return [...new Set(tags)];
     },
     awaitingTodos(state: StoreState): Todo[] {
-      return state.todos.filter(todo => {
-        return !todo.done && !todo.archived && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
+      return this.activeTodos.filter(todo => {
+        return !todo.done
+          && isTextIncluded(todo.title, state.search)
+          && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
     todayTodos(state: StoreState): Todo[] {
-      return state.todos.filter(todo => {
-        return isDeadline(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
+      return this.activeTodos.filter(todo => {
+        return isDeadline(todo.deadline)
+          && !todo.done && isTextIncluded(todo.title, state.search)
+          && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
     nextDaysTodos(state: StoreState): Todo[] {
-      return state.todos.filter(todo => {
-        return !isDeadline(todo.deadline) && !todo.archived && !todo.done && isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
+      return this.activeTodos.filter(todo => {
+        return !isDeadline(todo.deadline)
+          && !todo.done
+          && isTextIncluded(todo.title, state.search)
+          && hasSelectedTag(todo.tags, state.selectedTags);
       })
     },
   },

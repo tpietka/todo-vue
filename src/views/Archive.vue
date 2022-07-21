@@ -4,7 +4,7 @@ import TodoList from '../components/TodoList.vue';
 import { useTodos } from '../stores/todos';
 import CustomButton from '../components/CustomButton.vue';
 import Tags from '../components/Tags.vue';
-const { archivedTodos, archivedTags } = toRefs(useTodos());
+const { archivedSelectedTodos, archivedTags } = toRefs(useTodos());
 </script>
 <template>
   <div
@@ -23,7 +23,7 @@ const { archivedTodos, archivedTags } = toRefs(useTodos());
       <todo-list
         class="w-full"
         label="Archived"
-        :todos="archivedTodos"
+        :todos="archivedSelectedTodos"
         no-todos-message="You have no archived todos"
       ></todo-list>
     </div>
