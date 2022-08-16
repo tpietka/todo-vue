@@ -65,7 +65,6 @@ const { validateDateFormat, validateRequired } = useValidations();
 const rules = computed(() => ({
   form: {
     title: { required: validateRequired('Title') },
-    description: { required: validateRequired('Description') },
     deadline: {
       required: validateRequired('Deadline'),
       format: validateDateFormat(),
@@ -97,10 +96,6 @@ const v = useVuelidate(rules, { form });
         rows="4"
         v-model="form.description"
       />
-      <validation-error-message
-        :display-error="v.form.description.$error"
-        :error-messages="v.form.description.$errors"
-      ></validation-error-message>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
       <input-label label="Tags"></input-label>
