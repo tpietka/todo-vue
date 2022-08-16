@@ -31,7 +31,7 @@ const monthIndentation = computed(
 
 <template>
   <div
-    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40 dark:bg-[#141921] bg-[#F1F5F9] text-slate-800 dark:text-slate-100 border-2 border-slate-100 p-4 flex-col w-96 max-h-full"
+    class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40 dark:bg-[#141921] bg-[#F1F5F9] text-slate-800 dark:text-slate-100 border-2 border-slate-100 p-4 flex-col w-96 max-h-full"
   >
     <div class="flex my-3 justify-evenly">
       <div class="flex items-center gap-2">
@@ -94,7 +94,7 @@ const monthIndentation = computed(
   z-index: 30;
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   opacity: 0.6;
