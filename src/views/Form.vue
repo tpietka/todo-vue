@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue';
-import { Todo } from '../models/todo';
+import { Task, Todo } from '../models/todo';
 import { useTodos } from '../stores/todos';
 import { useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
@@ -18,8 +18,10 @@ const props = defineProps<{
 
 let displayDialog = ref(false);
 let tag = ref('');
+let task = ref('');
 let form = ref({
   tags: [] as string[],
+  tasks: [] as Task[],
 } as Todo);
 let showDatePicker = ref(false);
 
@@ -34,10 +36,15 @@ onBeforeMount(() => {
 const addTag = () => {
   if (tag.value && tag.value != ' ') {
     form.value.tags.push(tag.value);
-    tag.value = '';
-  } else {
-    tag.value = '';
   }
+  tag.value = '';
+};
+
+const addTask = () => {
+  if (task.value) {
+    form.value.tasks.push({ title: task.value, done: false });
+  }
+  task.value = '';
 };
 
 const router = useRouter();
@@ -58,8 +65,6 @@ const submit = async () => {
 const goBack = () => {
   router.back();
 };
-
-var randomColor = 'bg-[#' + Math.floor(Math.random() * 16777215).toString(16) + ']';
 
 const { validateDateFormat, validateRequired } = useValidations();
 const rules = computed(() => ({
@@ -98,6 +103,36 @@ const v = useVuelidate(rules, { form });
       />
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
+      <input-label label="Tasks"></input-label>
+      <span class="relative flex items-center">
+        <input
+          class="w-full px-4 bg-slate-300 text-slate-800 h-10"
+          type="text"
+          v-model="task"
+          @change="addTask"
+          @keydown.enter="addTask"
+        />
+        <span
+          class="material-icons cursor-pointer absolute not-selectable dark:text-[#141921] mr-2 right-0"
+          >add</span
+        >
+      </span>
+      <div v-if="form.tasks.length > 0" class="flex flex-col mt-4 gap-2">
+        <div
+          class="p-2 bg-slate-800 flex w-full items-center justify-between gap-2"
+          v-for="(task, index) in form.tasks"
+          :key="index"
+        >
+          <span>{{ task.title }}</span>
+          <span
+            class="material-icons not-selectable cursor-pointer"
+            @click="form.tasks.splice(index, 1)"
+            >cancel</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
       <input-label label="Tags"></input-label>
       <input
         class="w-full px-4 bg-slate-300 text-slate-800 h-10"
@@ -113,7 +148,9 @@ const v = useVuelidate(rules, { form });
           :key="index"
         >
           {{ tag }}
-          <span class="material-icons cursor-pointer" @click="form.tags.splice(index, 1)"
+          <span
+            class="material-icons not-selectable cursor-pointer"
+            @click="form.tags.splice(index, 1)"
             >cancel</span
           >
         </div>

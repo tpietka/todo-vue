@@ -1,22 +1,27 @@
 import { Todo } from '../models/todo';
-import { defineStore, Store } from 'pinia'
-import { getCurrentDateTime, getCurrentDate, formatDateToYYYYMMDD, getTomorrowsDate } from '../helpers/date';
+import { defineStore } from 'pinia';
+import {
+  getCurrentDateTime,
+  getCurrentDate,
+  formatDateToYYYYMMDD,
+  getTomorrowsDate,
+} from '../helpers/date';
 import { useAlerts } from './alerts';
 
 const isTextIncluded = (originalValue: string, searchValue: string): boolean => {
-  return originalValue.toLowerCase().includes(searchValue.toLowerCase())
-}
+  return originalValue.toLowerCase().includes(searchValue.toLowerCase());
+};
 
 const hasSelectedTag = (todoTags: string[], searchedTags: string[]) => {
   if (searchedTags.length > 0) {
-    return searchedTags.some(tag => todoTags.includes(tag));
+    return searchedTags.some((tag) => todoTags.includes(tag));
   }
   return true;
-}
+};
 
 const isDeadline = (date: string) => {
-  return getCurrentDate() >= formatDateToYYYYMMDD(date)
-}
+  return getCurrentDate() >= formatDateToYYYYMMDD(date);
+};
 
 interface StoreState {
   todos: Todo[];
@@ -29,75 +34,96 @@ export const useTodos = defineStore('todos', {
       todos: [],
       search: '',
       selectedTags: [],
-    }
+    };
   },
   getters: {
     doneTodos(state: StoreState): Todo[] {
-      return this.activeTodos.filter(todo => {
-        return todo.done
-          && isTextIncluded(todo.title, state.search)
-          && hasSelectedTag(todo.tags, state.selectedTags);
-      })
+      return this.activeTodos.filter((todo) => {
+        return (
+          todo.done &&
+          isTextIncluded(todo.title, state.search) &&
+          hasSelectedTag(todo.tags, state.selectedTags)
+        );
+      });
     },
     activeTodos(state: StoreState): Todo[] {
-      return state.todos.filter(todo => {
+      return state.todos.filter((todo) => {
         return !todo.archived;
-      })
+      });
     },
     activeTags(): string[] {
       let tags: string[] = [];
-      this.activeTodos.forEach(todo => {
+      this.activeTodos.forEach((todo) => {
         if (todo.tags?.length > 0)
-          todo.tags.forEach(tag => {
+          todo.tags.forEach((tag) => {
             tags.push(tag);
-          })
-      })
+          });
+      });
       return [...new Set(tags)];
     },
     archivedTodos(state: StoreState): Todo[] {
-      return state.todos.filter(todo => {
+      return state.todos.filter((todo) => {
         return todo.archived;
-      })
+      });
     },
     archivedSelectedTodos(state: StoreState): Todo[] {
-      return this.archivedTodos.filter(todo => {
-        return isTextIncluded(todo.title, state.search) && hasSelectedTag(todo.tags, state.selectedTags);
-      })
+      return this.archivedTodos.filter((todo) => {
+        return (
+          isTextIncluded(todo.title, state.search) &&
+          hasSelectedTag(todo.tags, state.selectedTags)
+        );
+      });
     },
     archivedTags(): string[] {
       let tags: string[] = [];
-      this.archivedTodos.forEach(todo => {
+      this.archivedTodos.forEach((todo) => {
         if (todo.tags?.length > 0)
-          todo.tags.forEach(tag => {
+          todo.tags.forEach((tag) => {
             tags.push(tag);
-          })
-      })
+          });
+      });
       return [...new Set(tags)];
     },
     awaitingTodos(state: StoreState): Todo[] {
-      return this.activeTodos.filter(todo => {
-        return !todo.done
-          && isTextIncluded(todo.title, state.search)
-          && hasSelectedTag(todo.tags, state.selectedTags);
-      })
+      return this.activeTodos.filter((todo) => {
+        return (
+          !todo.done &&
+          isTextIncluded(todo.title, state.search) &&
+          hasSelectedTag(todo.tags, state.selectedTags)
+        );
+      });
     },
     todayTodos(state: StoreState): Todo[] {
-      return this.activeTodos.filter(todo => {
-        return isDeadline(todo.deadline)
-          && !todo.done && isTextIncluded(todo.title, state.search)
-          && hasSelectedTag(todo.tags, state.selectedTags);
-      })
+      return this.activeTodos.filter((todo) => {
+        return (
+          isDeadline(todo.deadline) &&
+          !todo.done &&
+          isTextIncluded(todo.title, state.search) &&
+          hasSelectedTag(todo.tags, state.selectedTags)
+        );
+      });
     },
     nextDaysTodos(state: StoreState): Todo[] {
-      return this.activeTodos.filter(todo => {
-        return !isDeadline(todo.deadline)
-          && !todo.done
-          && isTextIncluded(todo.title, state.search)
-          && hasSelectedTag(todo.tags, state.selectedTags);
-      })
+      return this.activeTodos.filter((todo) => {
+        return (
+          !isDeadline(todo.deadline) &&
+          !todo.done &&
+          isTextIncluded(todo.title, state.search) &&
+          hasSelectedTag(todo.tags, state.selectedTags)
+        );
+      });
     },
   },
   actions: {
+    updateTask(id: number, index: number, value: boolean) {
+      const todo = this.todos.find((x) => x.id == id);
+      if (todo) {
+        todo.tasks[index].done = value;
+      }
+      localStorage.setItem('todos', JSON.stringify(this.todos));
+
+      this.displayAlert('Task updated', 'positive');
+    },
     toggleTag(tag: string) {
       if (this.selectedTags.includes(tag)) {
         this.selectedTags.splice(this.selectedTags.indexOf(tag), 1);
@@ -116,7 +142,7 @@ export const useTodos = defineStore('todos', {
       this.displayAlert('Todo created', 'positive');
     },
     editTodo(id: number, updatedTodo: Todo): void {
-      let todo = this.todos.filter(todo => {
+      let todo = this.todos.filter((todo) => {
         return todo.id === id;
       })[0];
       todo = updatedTodo;
@@ -128,12 +154,12 @@ export const useTodos = defineStore('todos', {
       if (this.todos.length < 1) {
         this.getTodos();
       }
-      return this.todos.filter(todo => {
+      return this.todos.filter((todo) => {
         return todo.id === id;
       })[0];
     },
     archiveTodo(id: number): void {
-      let todo = this.todos.filter(todo => {
+      let todo = this.todos.filter((todo) => {
         return todo.id === id;
       })[0];
       todo.archived = true;
@@ -142,9 +168,9 @@ export const useTodos = defineStore('todos', {
       this.displayAlert('Todo archived', 'positive');
     },
     moveTodo(id: number, type: string): void {
-      let todo = this.todos.filter(todo => {
+      let todo = this.todos.filter((todo) => {
         return todo.id == id;
-      })[0]
+      })[0];
       if (type == 'Today') {
         todo.deadline = getCurrentDate();
         todo.done = false;
@@ -165,22 +191,24 @@ export const useTodos = defineStore('todos', {
         if (b.deadline >= a.deadline) {
           return -1;
         } else if (b.deadline < a.deadline) {
-          return 1
+          return 1;
         } else {
-          return 0
+          return 0;
         }
-      })
+      });
     },
     getNextId(): number {
       if (this.todos.length < 1) {
         return 1;
       }
-      return this.todos.sort((a, b) => {
-        return a.id - b.id;
-      })[this.todos.length - 1].id + 1;
+      return (
+        this.todos.sort((a, b) => {
+          return a.id - b.id;
+        })[this.todos.length - 1].id + 1
+      );
     },
     setDone(id: number): void {
-      const todo = this.todos.find(x => x.id == id);
+      const todo = this.todos.find((x) => x.id == id);
       if (todo) {
         todo.done = true;
         todo.completed = getCurrentDate();
@@ -194,7 +222,7 @@ export const useTodos = defineStore('todos', {
       displayAlert(message, type);
     },
     setNotDone(id: number): void {
-      const todo = this.todos.find(x => x.id == id);
+      const todo = this.todos.find((x) => x.id == id);
       if (todo) {
         todo.done = false;
         todo.completed = '';
@@ -204,9 +232,9 @@ export const useTodos = defineStore('todos', {
       this.displayAlert('Todo undone', 'positive');
     },
     deleteTodo(id: number): void {
-      this.todos = this.todos.filter(item => {
+      this.todos = this.todos.filter((item) => {
         return item.id != id;
-      })
+      });
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
       this.displayAlert('Todo deleted', 'positive');
@@ -219,4 +247,4 @@ export const useTodos = defineStore('todos', {
       }
     },
   },
-})
+});

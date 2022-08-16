@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Todo } from '../models/todo';
+import { useTodos } from '../stores/todos';
 import TodoButtons from './TodoButtons.vue';
 import TodoDate from './TodoDate.vue';
+import TodoTasks from './TodoTasks.vue';
 
 defineProps<{
   todo: Todo;
 }>();
+
+const { updateTask } = useTodos();
 
 let showMore = ref(false);
 </script>
@@ -28,10 +32,14 @@ let showMore = ref(false);
     </div>
     <div v-if="showMore">
       <div class="">
-        <div class="text-md py-2 text-slate-400">
+        <div class="text-md pt-2 text-slate-400">
           {{ todo.description }}
         </div>
-        <div class="flex gap-1">
+        <todo-tasks
+          @update-task="(index: number, value: boolean) => updateTask(todo.id, index, value)"
+          :tasks="todo.tasks"
+        ></todo-tasks>
+        <div class="flex py-1 gap-1">
           <span
             class="px-2 py-0.2 text-[10px] border-2 rounded-xl border-slate-800 dark:border-slate-100"
             v-for="tag in todo.tags"
