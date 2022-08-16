@@ -19,11 +19,11 @@ export const useAlerts = defineStore('alerts', {
       this.message = message;
       this.type = type;
       this.display = true;
-      setInterval(() => {
+      setTimeout(() => {
         this.display = false;
         this.message = '';
         this.type = '';
-      }, 4000);
+      }, 2000);
     },
   },
 });
