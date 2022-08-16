@@ -16,7 +16,7 @@ const { search } = toRefs(useTodos());
       type="text"
       class="px-12 w-full focus:outline-none bg-transparent text-slate-800 dark:text-slate-300"
       v-model="search"
-      placeholder="Search for todo"
+      :placeholder="$t('message.search')"
     /><span
       @click="search = ''"
       v-if="search"

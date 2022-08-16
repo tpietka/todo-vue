@@ -2,8 +2,9 @@
 import { toRefs } from 'vue';
 import { getCurrentDayName, getCurrentDateDDMMYYYY } from '../helpers/date';
 import { useSettings } from '../stores/settings';
-const { setDark, setLight } = useSettings();
-const { theme } = toRefs(useSettings());
+
+const { setDark, setLight, setLocale } = useSettings();
+const { theme, locale } = toRefs(useSettings());
 </script>
 
 <template>
@@ -25,6 +26,10 @@ const { theme } = toRefs(useSettings());
           @click="setLight"
           >light_mode</span
         >
+      </div>
+      <div class="cursor-pointer">
+        <span v-if="locale != 'pl'" @click="setLocale('pl')">PL</span>
+        <span v-if="locale != 'en'" @click="setLocale('en')">EN</span>
       </div>
       <div class="text-right w-full flex-col">
         <div class="text-lg">{{ getCurrentDayName() }}</div>

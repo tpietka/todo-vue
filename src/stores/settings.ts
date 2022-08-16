@@ -1,17 +1,33 @@
 import { defineStore } from 'pinia'
+import { i18n } from '../locale/i18n'
 
 interface StoreState {
   theme: string;
+  locale: string;
 }
 export const useSettings = defineStore('settings', {
   state: (): StoreState => {
     return {
       theme: 'light',
+      locale: 'en',
     }
   },
   getters: {
   },
   actions: {
+    setLocale(locale: 'pl' | 'en'): void {
+      localStorage.setItem('locale', locale);
+      this.locale = locale;
+      this.seti18nLocale(locale);
+    },
+    getLocale(): void {
+      const localeToSet = localStorage.getItem('locale')?.toString() == 'pl' ? 'pl' : 'en';
+      this.locale = localeToSet;
+      this.seti18nLocale(localeToSet);
+    },
+    seti18nLocale(locale: 'pl' | 'en'): void {
+      i18n.global.locale = locale;
+    },
     setDark(): void {
       this.theme = 'dark';
       localStorage.setItem('theme', 'dark');

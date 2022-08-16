@@ -11,7 +11,6 @@ import { useValidations } from '../composables/validations';
 import { useAlerts } from '../stores/alerts';
 import CustomButton from '../components/CustomButton.vue';
 import DialogVue from '../components/Dialog.vue';
-import { stringLiteral } from '@babel/types';
 
 const props = defineProps<{
   id?: number | string;
@@ -81,9 +80,9 @@ const v = useVuelidate(rules, { form });
 </script>
 <template>
   <div class="w-full mt-12 flex-col">
-    <h1 class="text-xl pb-10 text-center">Todo details</h1>
+    <h1 class="text-xl pb-10 text-center">{{ $t('message.newTodo') }}</h1>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
-      <input-label label="Title"></input-label>
+      <input-label :label="$t('message.title')"></input-label>
       <input
         class="w-full px-4 bg-slate-300 text-slate-800 h-10"
         type="text"
@@ -96,7 +95,7 @@ const v = useVuelidate(rules, { form });
       ></validation-error-message>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
-      <input-label label="Description"></input-label>
+      <input-label :label="$t('message.description')"></input-label>
       <textarea
         class="w-full py-2 px-4 bg-slate-300 text-slate-800"
         rows="4"
@@ -104,7 +103,7 @@ const v = useVuelidate(rules, { form });
       />
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
-      <input-label label="Tasks"></input-label>
+      <input-label :label="$t('message.tasks')"></input-label>
       <span class="relative flex items-center">
         <input
           class="w-full px-4 bg-slate-300 text-slate-800 h-10"
@@ -134,7 +133,7 @@ const v = useVuelidate(rules, { form });
       </div>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
-      <input-label label="Tags"></input-label>
+      <input-label :label="$t('message.tags')"></input-label>
       <input
         class="w-full px-4 bg-slate-300 text-slate-800 h-10"
         type="text"
@@ -158,7 +157,7 @@ const v = useVuelidate(rules, { form });
       </div>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
-      <input-label label="Deadline"></input-label>
+      <input-label :label="$t('message.deadline')"></input-label>
       <span class="relative flex items-center">
         <input
           placeholder="YYYY-MM-DD"
@@ -180,7 +179,7 @@ const v = useVuelidate(rules, { form });
       </validation-error-message>
     </div>
     <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
-      <input-label label="Priority"></input-label>
+      <input-label :label="$t('message.priority')"></input-label>
       <span
         @click="form.priority = n"
         v-for="n in 5"
@@ -199,27 +198,27 @@ const v = useVuelidate(rules, { form });
         @click="submit"
         class="bg-green-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-green-600"
         id="btn-save-form"
-        label="Save"
+        :label="$t('message.save')"
       ></custom-button>
       <custom-button
         @click="displayDialog = true"
         class="bg-red-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-red-600"
         id="btn-leave-form"
-        label="Go back"
+        :label="$t('message.goBack')"
       ></custom-button>
     </div>
-    <dialog-vue :display="displayDialog" message="Are you sure?">
+    <dialog-vue :display="displayDialog" :message="$t('message.areYouSure')">
       <custom-button
         @click="goBack"
         class="bg-slate-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48"
         id="btn-save-form"
-        label="Go back"
+        :label="$t('message.yes')"
       ></custom-button>
       <custom-button
         @click="displayDialog = false"
         class="bg-slate-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48"
         id="btn-leave-form"
-        label="Stay"
+        :label="$t('message.no')"
       ></custom-button>
     </dialog-vue>
   </div>

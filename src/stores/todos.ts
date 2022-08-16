@@ -7,6 +7,9 @@ import {
   getTomorrowsDate,
 } from '../helpers/date';
 import { useAlerts } from './alerts';
+import { i18n } from '../locale/i18n'
+
+const { t } = i18n.global
 
 const isTextIncluded = (originalValue: string, searchValue: string): boolean => {
   return originalValue.toLowerCase().includes(searchValue.toLowerCase());
@@ -122,7 +125,7 @@ export const useTodos = defineStore('todos', {
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      this.displayAlert('Task updated', 'positive');
+      this.displayAlert(t('message.taskUpdated'), 'positive');
     },
     toggleTag(tag: string) {
       if (this.selectedTags.includes(tag)) {
@@ -139,7 +142,7 @@ export const useTodos = defineStore('todos', {
       localStorage.setItem('todos', JSON.stringify(this.todos));
       this.sortTodos();
 
-      this.displayAlert('Todo created', 'positive');
+      this.displayAlert(t('message.todoCreated'), 'positive');
     },
     editTodo(id: number, updatedTodo: Todo): void {
       let todo = this.todos.filter((todo) => {
@@ -148,7 +151,7 @@ export const useTodos = defineStore('todos', {
       todo = updatedTodo;
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      this.displayAlert('Todo modified', 'positive');
+      this.displayAlert(t('message.todoModified'), 'positive');
     },
     getTodo(id: number): Todo {
       if (this.todos.length < 1) {
@@ -165,7 +168,7 @@ export const useTodos = defineStore('todos', {
       todo.archived = true;
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      this.displayAlert('Todo archived', 'positive');
+      this.displayAlert(t('message.todoArchived'), 'positive');
     },
     moveTodo(id: number, type: string): void {
       let todo = this.todos.filter((todo) => {
@@ -215,7 +218,7 @@ export const useTodos = defineStore('todos', {
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      this.displayAlert('Todo done', 'positive');
+      this.displayAlert(t('message.todoDone'), 'positive');
     },
     displayAlert(message: string, type: string) {
       const { displayAlert } = useAlerts();
@@ -229,7 +232,7 @@ export const useTodos = defineStore('todos', {
       }
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      this.displayAlert('Todo undone', 'positive');
+      this.displayAlert(t('message.todoUndone'), 'positive');
     },
     deleteTodo(id: number): void {
       this.todos = this.todos.filter((item) => {
@@ -237,7 +240,7 @@ export const useTodos = defineStore('todos', {
       });
       localStorage.setItem('todos', JSON.stringify(this.todos));
 
-      this.displayAlert('Todo deleted', 'positive');
+      this.displayAlert(t('message.todoDeleted'), 'positive');
     },
     getTodos(): void {
       const localStorageTodos = localStorage.getItem('todos');
@@ -248,3 +251,4 @@ export const useTodos = defineStore('todos', {
     },
   },
 });
+

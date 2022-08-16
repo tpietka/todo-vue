@@ -14,13 +14,13 @@ const { todayTodos, nextDaysTodos, doneTodos, activeTags } = toRefs(useTodos());
       class="bg-green-700 text-slate-100 font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-green-600"
       id="btn-add-todo"
       routeName="NewTodoForm"
-      label="Add Todo"
+      :label="$t('message.addTodo')"
     ></custom-button>
     <custom-button
       class="bg-slate-500 text-slate-100 font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48 hover:bg-slate-600"
       id="btn-archive-todos"
       routeName="Archive"
-      label="Archived Todos"
+      :label="$t('message.archivedTodos')"
     ></custom-button>
   </div>
   <div class="mx-6 lg:mx-auto">
@@ -28,27 +28,27 @@ const { todayTodos, nextDaysTodos, doneTodos, activeTags } = toRefs(useTodos());
     <div class="lg:flex lg:w-full my-4 lg:my-10">
       <todo-list
         class="w-full"
-        label="Today"
+        :label="$t('message.today')"
         :todos="todayTodos"
-        no-todos-message="You have no todos planned for today"
+        :no-todos-message="$t('message.doNotHaveTodayTodos')"
       ></todo-list>
       <div
         class="border-b-2 lg:border-b-0 lg:border-r-2 my-10 lg:my-0 lg:mx-10 border-slate-800 dark:border-slate-100 h-1 lg:h-auto"
       ></div>
       <todo-list
         class="w-full"
-        label="Next days"
+        :label="$t('message.nextDays')"
         :todos="nextDaysTodos"
-        no-todos-message="You have no todos planned for next days"
+        :no-todos-message="$t('message.doNotHaveNextDaysTodos')"
       ></todo-list>
       <div
         class="border-b-2 lg:border-b-0 lg:border-r-2 my-10 lg:my-0 lg:mx-10 border-slate-800 dark:border-slate-100 h-1 lg:h-auto"
       ></div>
       <todo-list
         class="w-full"
-        label="Done"
+        :label="$t('message.done')"
         :todos="doneTodos"
-        no-todos-message="You have no done todos"
+        :no-todos-message="$t('message.doNotHaveDoneTodos')"
       ></todo-list>
     </div>
   </div>

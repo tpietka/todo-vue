@@ -4,11 +4,12 @@ import { useSettings } from './stores/settings';
 import { useTodos } from './stores/todos';
 import Alert from './components/Alert.vue';
 const { getTodos } = useTodos();
-const { isDark } = useSettings();
+const { isDark, getLocale } = useSettings();
 
 onBeforeMount(() => {
   isDark();
   getTodos();
+  getLocale();
 });
 </script>
 
