@@ -18,7 +18,12 @@ const updateTask = (index: number, value: boolean) => {
       :key="index"
       class="leading-tight text-xl text-slate-400 flex items-center gap-3"
     >
+      <label :for="`task-done-${index}`" v-if="!task.done" class="material-icons">
+        radio_button_unchecked
+      </label>
+      <label :for="`task-done-${index}`" v-else class="material-icons"> task_alt </label>
       <input
+        hidden
         type="checkbox"
         @change="updateTask(index, task.done)"
         :id="`task-done-${index}`"
