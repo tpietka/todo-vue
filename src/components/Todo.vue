@@ -5,6 +5,7 @@ import { useTodos } from '../stores/todos';
 import TodoButtons from './TodoButtons.vue';
 import TodoDate from './TodoDate.vue';
 import TodoTasks from './TodoTasks.vue';
+import TodoTags from './TodoTags.vue';
 
 defineProps<{
   todo: Todo;
@@ -31,24 +32,17 @@ let showMore = ref(false);
       </span>
     </div>
     <div v-if="showMore">
-      <div class="">
-        <div class="text-md pt-2 text-slate-400">
-          {{ todo.description }}
-        </div>
+      <div class="flex w-full flex-col">
         <todo-tasks
+          class="w-full"
           @update-task="(index: number, value: boolean) => updateTask(todo.id, index, value)"
           :tasks="todo.tasks"
         ></todo-tasks>
-        <div class="flex py-1 gap-1">
-          <span
-            class="px-2 py-0.2 text-[10px] border-2 rounded-xl border-slate-800 dark:border-slate-100"
-            v-for="tag in todo.tags"
-            :key="tag"
-          >
-            {{ tag }}
-          </span>
+        <div class="text-md leading-5 py-2 w-full text-slate-400">
+          {{ todo.description }}
         </div>
       </div>
+      <todo-tags :tags="todo.tags"></todo-tags>
     </div>
     <div class="font-bold flex items-end justify-between text-xl">
       <div :class="[todo.done ? 'bg-transparent' : '', 'flex-col items-center mt-2']">

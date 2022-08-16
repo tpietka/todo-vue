@@ -12,7 +12,7 @@ const updateTask = (index: number, value: boolean) => {
 </script>
 
 <template>
-  <div class="flex-col justify-between items-center py-2">
+  <div v-if="tasks.length > 0" class="flex-col justify-between items-center py-2">
     <div
       v-for="(task, index) in tasks"
       :key="index"
