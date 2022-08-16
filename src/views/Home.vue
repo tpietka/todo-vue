@@ -25,7 +25,7 @@ const { todayTodos, nextDaysTodos, doneTodos, activeTags } = toRefs(useTodos());
   </div>
   <div class="mx-6 lg:mx-auto">
     <tags :tags="activeTags"></tags>
-    <div class="lg:flex lg:w-full my-10">
+    <div class="lg:flex lg:w-full my-4 lg:my-10">
       <todo-list
         class="w-full"
         label="Today"

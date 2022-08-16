@@ -19,7 +19,7 @@ let showMore = ref(false);
 <template>
   <div class="flex-col justify-between gap-2 items-center">
     <div class="leading-tight text-xl flex items-center justify-between gap-2">
-      <span>{{ todo.title }}</span>
+      <span class="my-2">{{ todo.title }}</span>
       <span v-if="todo.description" class="flex">
         <span
           @click="showMore = true"
@@ -44,18 +44,16 @@ let showMore = ref(false);
       </div>
       <todo-tags :tags="todo.tags"></todo-tags>
     </div>
-    <div class="font-bold flex items-end justify-between text-xl">
-      <div :class="[todo.done ? 'bg-transparent' : '', 'flex-col items-center mt-2']">
-        <todo-date v-if="!todo.done" :done="todo.done" :date="todo.deadline"></todo-date>
-        <todo-date v-else :done="todo.done" :date="todo.completed"></todo-date>
-        <div class="flex mt-1 items-center">
-          <span
-            v-for="n in todo.priority"
-            class="text-red-500 material-icons lg-14 priority"
-          >
-            local_fire_department
-          </span>
-        </div>
+    <div class="font-bold flex items-center justify-between text-xl my-2">
+      <todo-date v-if="!todo.done" :done="todo.done" :date="todo.deadline"></todo-date>
+      <todo-date v-else :done="todo.done" :date="todo.completed"></todo-date>
+      <div class="flex items-center">
+        <span
+          v-for="n in todo.priority"
+          class="text-red-500 material-icons lg-14 priority"
+        >
+          local_fire_department
+        </span>
       </div>
       <todo-buttons :todo="todo"></todo-buttons>
     </div>
