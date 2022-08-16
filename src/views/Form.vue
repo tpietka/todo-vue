@@ -11,6 +11,7 @@ import { useValidations } from '../composables/validations';
 import { useAlerts } from '../stores/alerts';
 import CustomButton from '../components/CustomButton.vue';
 import DialogVue from '../components/Dialog.vue';
+import { stringLiteral } from '@babel/types';
 
 const props = defineProps<{
   id?: number | string;
@@ -34,15 +35,15 @@ onBeforeMount(() => {
 });
 
 const addTag = () => {
-  if (tag.value && tag.value != ' ') {
-    form.value.tags.push(tag.value);
+  if (tag.value.trim()) {
+    form.value.tags.push(tag.value.trim());
   }
   tag.value = '';
 };
 
 const addTask = () => {
-  if (task.value) {
-    form.value.tasks.push({ title: task.value, done: false });
+  if (task.value.trim()) {
+    form.value.tasks.push({ title: task.value.trim(), done: false });
   }
   task.value = '';
 };
@@ -110,7 +111,7 @@ const v = useVuelidate(rules, { form });
           type="text"
           v-model="task"
           @change="addTask"
-          @keydown.enter="addTask"
+          @keyup.enter="addTask"
         />
         <span
           class="material-icons cursor-pointer absolute not-selectable dark:text-[#141921] mr-2 right-0"
@@ -138,8 +139,8 @@ const v = useVuelidate(rules, { form });
         class="w-full px-4 bg-slate-300 text-slate-800 h-10"
         type="text"
         v-model="tag"
-        @keydown.space="addTag"
-        @keydown.enter="addTag"
+        @keyup.space="addTag"
+        @keyup.enter="addTag"
       />
       <div v-if="form.tags.length > 0" class="flex mt-4 gap-2">
         <div
