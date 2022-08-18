@@ -15,7 +15,7 @@ const navigate = () => {
 };
 </script>
 <template>
-  <button :id="id" @click="navigate">
+  <button type="button" :id="id" @click="navigate">
     {{ label }}
   </button>
 </template>
