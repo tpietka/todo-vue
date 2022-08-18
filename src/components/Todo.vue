@@ -18,7 +18,7 @@ let showMore = ref(false);
 
 <template>
   <div class="flex-col justify-between gap-2 items-center">
-    <div class="leading-tight text-xl flex items-center justify-between gap-2">
+    <div class="leading-tight text-xl flex justify-between gap-2">
       <span class="my-2">{{ todo.title }}</span>
       <span v-if="todo.description" class="flex">
         <span

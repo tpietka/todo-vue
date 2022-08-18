@@ -2,16 +2,18 @@
 import { computed, onBeforeMount, ref } from 'vue';
 import { Task, Todo } from '../models/todo';
 import { useTodos } from '../stores/todos';
-import { useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 import InputLabel from '../components/InputLabel.vue';
 import DatePicker from '../components/DatePicker.vue';
 import ValidationErrorMessage from '../components/ValidationErrorMessage.vue';
 import { useValidations } from '../composables/validations';
-import { useAlerts } from '../stores/alerts';
 import FormButton from '../components/FormButton.vue';
 import CustomButton from '../components/CustomButton.vue';
 import DialogVue from '../components/Dialog.vue';
+import FormTasks from '../components/FormTasks.vue';
+import FormTags from '../components/FormTags.vue';
+import FormInput from '../components/FormInput.vue';
+import FormPriority from '../components/FormPriority.vue';
 
 const props = defineProps<{
   id?: number | string;
@@ -26,7 +28,7 @@ let form = ref({
 } as Todo);
 let showDatePicker = ref(false);
 
-const { addTodo, editTodo, getTodo } = useTodos();
+const { submitForm, getTodo } = useTodos();
 onBeforeMount(() => {
   form.value.priority = 1;
   if (props.id) {
@@ -48,24 +50,9 @@ const addTask = () => {
   task.value = '';
 };
 
-const router = useRouter();
-const { displayAlert } = useAlerts();
 const submit = async (e: Event) => {
   e.preventDefault();
-  v.value.$touch();
-  if (v.value.$invalid) {
-    displayAlert('Errors detected in form', 'warning');
-  } else {
-    if (props.id) {
-      editTodo(Number(props.id), form.value);
-    } else {
-      addTodo(form.value);
-    }
-    await router.push('/');
-  }
-};
-const goBack = () => {
-  router.back();
+  await submitForm(v.value, form.value);
 };
 
 const { validateDateFormat, validateRequired } = useValidations();
@@ -83,14 +70,10 @@ const v = useVuelidate(rules, { form });
 <template>
   <div class="w-full mt-12 flex-col">
     <h1 class="text-xl pb-10 text-center">{{ $t('message.newTodo') }}</h1>
-    <form @submit="submit">
+    <form @submit="submit" @keydown.enter="$event.preventDefault()">
       <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
         <input-label :label="$t('message.title')"></input-label>
-        <input
-          class="w-full px-4 bg-slate-300 text-slate-800 h-10"
-          type="text"
-          v-model="form.title"
-        />
+        <form-input v-model="form.title"></form-input>
         <validation-error-message
           class="mt-1"
           :display-error="v.form.title.$error"
@@ -108,66 +91,32 @@ const v = useVuelidate(rules, { form });
       <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
         <input-label :label="$t('message.tasks')"></input-label>
         <span class="relative flex items-center">
-          <input
-            class="w-full px-4 bg-slate-300 text-slate-800 h-10"
-            type="text"
+          <form-input
             v-model="task"
-            @change="addTask"
             @keyup.enter="addTask"
-          />
+            @change="addTask"
+          ></form-input>
           <span
             class="material-icons cursor-pointer absolute not-selectable dark:text-[#141921] mr-2 right-0"
             >add</span
           >
         </span>
-        <div v-if="form.tasks.length > 0" class="flex flex-col mt-4 gap-2">
-          <div
-            class="p-2 bg-slate-800 flex w-full items-center justify-between gap-2"
-            v-for="(task, index) in form.tasks"
-            :key="index"
-          >
-            <span>{{ task.title }}</span>
-            <span
-              class="material-icons not-selectable cursor-pointer"
-              @click="form.tasks.splice(index, 1)"
-              >cancel</span
-            >
-          </div>
-        </div>
+        <form-tasks :tasks="form.tasks"></form-tasks>
       </div>
       <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
         <input-label :label="$t('message.tags')"></input-label>
-        <input
-          class="w-full px-4 bg-slate-300 text-slate-800 h-10"
-          type="text"
+        <form-input
           v-model="tag"
-          @keyup.space="addTag"
           @keyup.enter="addTag"
-        />
-        <div v-if="form.tags.length > 0" class="flex mt-4 gap-2">
-          <div
-            class="p-2 flex items-center gap-2 border-2 rounded-xl border-slate-800 dark:border-slate-100"
-            v-for="(tag, index) in form.tags"
-            :key="index"
-          >
-            {{ tag }}
-            <span
-              class="material-icons not-selectable cursor-pointer"
-              @click="form.tags.splice(index, 1)"
-              >cancel</span
-            >
-          </div>
-        </div>
+          @keyup.space="addTag"
+          @change="addTag"
+        ></form-input>
+        <form-tags :tags="form.tags" v-model="form.tags"></form-tags>
       </div>
       <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
         <input-label :label="$t('message.deadline')"></input-label>
         <span class="relative flex items-center">
-          <input
-            placeholder="YYYY-MM-DD"
-            class="w-full px-4 bg-slate-300 text-slate-800 h-10"
-            type="text"
-            v-model="form.deadline"
-          />
+          <form-input v-model="form.deadline" placeholder="YYYY-MM-DD"></form-input>
           <span
             class="material-icons cursor-pointer absolute not-selectable dark:text-[#141921] mr-2 right-0"
             @click="showDatePicker = true"
@@ -183,16 +132,7 @@ const v = useVuelidate(rules, { form });
       </div>
       <div class="w-full lg:px-0 px-8 pb-8 lg:w-96 lg:mx-auto">
         <input-label :label="$t('message.priority')"></input-label>
-        <span
-          @click="form.priority = n"
-          v-for="n in 5"
-          :class="[
-            n <= form.priority ? 'text-red-500' : 'text-slate-300',
-            'material-icons lg-36 cursor-pointer not-selectable',
-          ]"
-        >
-          local_fire_department
-        </span>
+        <form-priority v-model="form.priority" :priority="form.priority"></form-priority>
       </div>
       <div
         class="fixed lg:relative lg:mt-4 h-14 lg:w-96 lg:mx-auto lg:gap-2 flex justify-center bottom-0 w-full"
@@ -214,7 +154,7 @@ const v = useVuelidate(rules, { form });
     </form>
     <dialog-vue :display="displayDialog" :message="$t('message.areYouSure')">
       <custom-button
-        @click="goBack"
+        @click="$router.back()"
         class="bg-slate-700 text-white font-bold py-3 lg:py-2 w-full bottom-0 lg:w-48"
         id="btn-save-form"
         :label="$t('message.yes')"

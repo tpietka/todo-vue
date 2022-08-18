@@ -8,6 +8,8 @@ import {
 } from '../helpers/date';
 import { useAlerts } from './alerts';
 import { i18n } from '../locale/i18n'
+import { Validation } from '@vuelidate/core';
+import { useRouter } from 'vue-router';
 
 const { t } = i18n.global
 
@@ -118,6 +120,20 @@ export const useTodos = defineStore('todos', {
     },
   },
   actions: {
+    async submitForm(v: Validation, todo: Todo) {
+      const router = useRouter();
+      v.$touch();
+      if (v.$invalid) {
+        this.displayAlert(t('message.formValidationFailed'), 'warning');
+      } else {
+        if (todo.id) {
+          this.editTodo(Number(todo.id), todo);
+        } else {
+          this.addTodo(todo);
+        }
+        await router.push('/');
+      }
+    },
     updateTask(id: number, index: number, value: boolean) {
       const todo = this.todos.find((x) => x.id == id);
       if (todo) {
