@@ -30,9 +30,11 @@ const { toggleTag } = useTodos();
         <tag :tag="tag"></tag>
       </div>
     </div>
-    <div class="lg:rotate-90" @click="showMore = !showMore" v-if="tags.length > 0">
-      <div v-if="!showMore" class="material-icons not-selectable">unfold_more</div>
-      <div v-else class="material-icons not-selectable">unfold_less</div>
+    <div class="rotate-90" @click="showMore = !showMore" v-if="tags.length > 0">
+      <div v-if="!showMore" class="material-icons cursor-pointer not-selectable">
+        unfold_more
+      </div>
+      <div v-else class="material-icons cursor-pointer not-selectable">unfold_less</div>
     </div>
   </div>
 </template>

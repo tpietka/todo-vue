@@ -12,7 +12,7 @@ const { theme, locale } = toRefs(useSettings());
     class="w-full h-14 fixed z-30 top-0 text-slate-800 dark:text-slate-300 dark:bg-slate-800 bg-slate-300"
   >
     <div class="flex h-full z-60 lg:w-10/12 mx-6 lg:mx-auto items-center">
-      <div @click="$router.push('/')" class="text-2xl w-full">MyTodos</div>
+      <div @click="$router.push('/')" class="text-2xl w-full cursor-pointer">MyTodos</div>
       <div class="w-full flex justify-center">
         <span
           v-if="theme != 'dark'"

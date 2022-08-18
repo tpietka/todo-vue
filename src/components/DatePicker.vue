@@ -24,9 +24,12 @@ const month = computed(() =>
   moment().year(selectedYear.value).month(selectedMonth.value).format('MM')
 );
 const year = computed(() => moment().year(selectedYear.value).format('YYYY'));
-const monthIndentation = computed(
-  () => moment().year(selectedYear.value).month(selectedMonth.value).isoWeekday() - 2
-);
+const monthIndentation = computed(() => {
+  return (
+    moment().year(selectedYear.value).month(selectedMonth.value).startOf('month').day() -
+    1
+  );
+});
 </script>
 
 <template>
