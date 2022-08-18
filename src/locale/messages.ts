@@ -30,6 +30,10 @@ export const messages = {
       todoDone: 'Todo marked as done',
       todoUndone: 'Todo marked as not done',
       todoDeleted: 'Todo deleted',
+      notEmpty: 'cannot be empty',
+      invalidDateFormat: 'Invalid date format',
+      formValidationFailed: 'Errors detected in form',
+      field: '',
     }
   },
   pl: {
@@ -63,6 +67,10 @@ export const messages = {
       todoDone: 'Zadanie ukończone',
       todoUndone: 'Zadanie oznaczone jako do wykonania',
       todoDeleted: 'Zadanie usunięte',
+      notEmpty: 'nie może puste',
+      invalidDateFormat: 'Niewłaściwy format daty',
+      formValidationFailed: 'Formularz zawiera błędy',
+      field: 'Pole'
     }
   }
 }
