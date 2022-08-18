@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, onBeforeUpdate } from 'vue';
 import { useSettings } from './stores/settings';
 import { useTodos } from './stores/todos';
 import Alert from './components/Alert.vue';
 const { getTodos } = useTodos();
 const { isDark, getLocale } = useSettings();
 
+onBeforeUpdate(() => {
+  getTodos();
+});
 onBeforeMount(() => {
   isDark();
-  getTodos();
   getLocale();
 });
 </script>
@@ -16,7 +18,7 @@ onBeforeMount(() => {
 <template>
   <alert></alert>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <router-view></router-view>
+  <router-view :key="$route.fullPath"></router-view>
 </template>
 
 <style>
